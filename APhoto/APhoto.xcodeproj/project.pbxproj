@@ -1,0 +1,507 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9776DDB51C860171001A141F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9776DDB41C860171001A141F /* AppDelegate.swift */; };
+		9776DDB71C860171001A141F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9776DDB61C860171001A141F /* ViewController.swift */; };
+		9776DDBA1C860171001A141F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9776DDB81C860171001A141F /* Main.storyboard */; };
+		9776DDBC1C860171001A141F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9776DDBB1C860171001A141F /* Assets.xcassets */; };
+		9776DDBF1C860171001A141F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9776DDBD1C860171001A141F /* LaunchScreen.storyboard */; };
+		9776DDCA1C860171001A141F /* APhotoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9776DDC91C860171001A141F /* APhotoTests.swift */; };
+		9776DDD51C860171001A141F /* APhotoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9776DDD41C860171001A141F /* APhotoUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9776DDC61C860171001A141F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9776DDA91C860171001A141F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9776DDB01C860171001A141F;
+			remoteInfo = APhoto;
+		};
+		9776DDD11C860171001A141F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9776DDA91C860171001A141F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9776DDB01C860171001A141F;
+			remoteInfo = APhoto;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		9776DDB11C860171001A141F /* APhoto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = APhoto.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9776DDB41C860171001A141F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		9776DDB61C860171001A141F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		9776DDB91C860171001A141F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		9776DDBB1C860171001A141F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9776DDBE1C860171001A141F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		9776DDC01C860171001A141F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9776DDC51C860171001A141F /* APhotoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = APhotoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9776DDC91C860171001A141F /* APhotoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APhotoTests.swift; sourceTree = "<group>"; };
+		9776DDCB1C860171001A141F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9776DDD01C860171001A141F /* APhotoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = APhotoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9776DDD41C860171001A141F /* APhotoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APhotoUITests.swift; sourceTree = "<group>"; };
+		9776DDD61C860171001A141F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9776DDAE1C860171001A141F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9776DDC21C860171001A141F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9776DDCD1C860171001A141F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9776DDA81C860171001A141F = {
+			isa = PBXGroup;
+			children = (
+				9776DDB31C860171001A141F /* APhoto */,
+				9776DDC81C860171001A141F /* APhotoTests */,
+				9776DDD31C860171001A141F /* APhotoUITests */,
+				9776DDB21C860171001A141F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9776DDB21C860171001A141F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9776DDB11C860171001A141F /* APhoto.app */,
+				9776DDC51C860171001A141F /* APhotoTests.xctest */,
+				9776DDD01C860171001A141F /* APhotoUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9776DDB31C860171001A141F /* APhoto */ = {
+			isa = PBXGroup;
+			children = (
+				9776DDB41C860171001A141F /* AppDelegate.swift */,
+				9776DDB61C860171001A141F /* ViewController.swift */,
+				9776DDB81C860171001A141F /* Main.storyboard */,
+				9776DDBB1C860171001A141F /* Assets.xcassets */,
+				9776DDBD1C860171001A141F /* LaunchScreen.storyboard */,
+				9776DDC01C860171001A141F /* Info.plist */,
+			);
+			path = APhoto;
+			sourceTree = "<group>";
+		};
+		9776DDC81C860171001A141F /* APhotoTests */ = {
+			isa = PBXGroup;
+			children = (
+				9776DDC91C860171001A141F /* APhotoTests.swift */,
+				9776DDCB1C860171001A141F /* Info.plist */,
+			);
+			path = APhotoTests;
+			sourceTree = "<group>";
+		};
+		9776DDD31C860171001A141F /* APhotoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				9776DDD41C860171001A141F /* APhotoUITests.swift */,
+				9776DDD61C860171001A141F /* Info.plist */,
+			);
+			path = APhotoUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9776DDB01C860171001A141F /* APhoto */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9776DDD91C860171001A141F /* Build configuration list for PBXNativeTarget "APhoto" */;
+			buildPhases = (
+				9776DDAD1C860171001A141F /* Sources */,
+				9776DDAE1C860171001A141F /* Frameworks */,
+				9776DDAF1C860171001A141F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = APhoto;
+			productName = APhoto;
+			productReference = 9776DDB11C860171001A141F /* APhoto.app */;
+			productType = "com.apple.product-type.application";
+		};
+		9776DDC41C860171001A141F /* APhotoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9776DDDC1C860171001A141F /* Build configuration list for PBXNativeTarget "APhotoTests" */;
+			buildPhases = (
+				9776DDC11C860171001A141F /* Sources */,
+				9776DDC21C860171001A141F /* Frameworks */,
+				9776DDC31C860171001A141F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9776DDC71C860171001A141F /* PBXTargetDependency */,
+			);
+			name = APhotoTests;
+			productName = APhotoTests;
+			productReference = 9776DDC51C860171001A141F /* APhotoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		9776DDCF1C860171001A141F /* APhotoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9776DDDF1C860171001A141F /* Build configuration list for PBXNativeTarget "APhotoUITests" */;
+			buildPhases = (
+				9776DDCC1C860171001A141F /* Sources */,
+				9776DDCD1C860171001A141F /* Frameworks */,
+				9776DDCE1C860171001A141F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9776DDD21C860171001A141F /* PBXTargetDependency */,
+			);
+			name = APhotoUITests;
+			productName = APhotoUITests;
+			productReference = 9776DDD01C860171001A141F /* APhotoUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9776DDA91C860171001A141F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = "Sudo Mobi";
+				TargetAttributes = {
+					9776DDB01C860171001A141F = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					9776DDC41C860171001A141F = {
+						CreatedOnToolsVersion = 7.2;
+						TestTargetID = 9776DDB01C860171001A141F;
+					};
+					9776DDCF1C860171001A141F = {
+						CreatedOnToolsVersion = 7.2;
+						TestTargetID = 9776DDB01C860171001A141F;
+					};
+				};
+			};
+			buildConfigurationList = 9776DDAC1C860171001A141F /* Build configuration list for PBXProject "APhoto" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9776DDA81C860171001A141F;
+			productRefGroup = 9776DDB21C860171001A141F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9776DDB01C860171001A141F /* APhoto */,
+				9776DDC41C860171001A141F /* APhotoTests */,
+				9776DDCF1C860171001A141F /* APhotoUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9776DDAF1C860171001A141F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9776DDBF1C860171001A141F /* LaunchScreen.storyboard in Resources */,
+				9776DDBC1C860171001A141F /* Assets.xcassets in Resources */,
+				9776DDBA1C860171001A141F /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9776DDC31C860171001A141F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9776DDCE1C860171001A141F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9776DDAD1C860171001A141F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9776DDB71C860171001A141F /* ViewController.swift in Sources */,
+				9776DDB51C860171001A141F /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9776DDC11C860171001A141F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9776DDCA1C860171001A141F /* APhotoTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9776DDCC1C860171001A141F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9776DDD51C860171001A141F /* APhotoUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9776DDC71C860171001A141F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9776DDB01C860171001A141F /* APhoto */;
+			targetProxy = 9776DDC61C860171001A141F /* PBXContainerItemProxy */;
+		};
+		9776DDD21C860171001A141F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9776DDB01C860171001A141F /* APhoto */;
+			targetProxy = 9776DDD11C860171001A141F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		9776DDB81C860171001A141F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9776DDB91C860171001A141F /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		9776DDBD1C860171001A141F /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9776DDBE1C860171001A141F /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		9776DDD71C860171001A141F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		9776DDD81C860171001A141F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		9776DDDA1C860171001A141F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = APhoto/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = mobi.sudo.APhoto;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		9776DDDB1C860171001A141F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = APhoto/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = mobi.sudo.APhoto;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		9776DDDD1C860171001A141F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = APhotoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = mobi.sudo.APhotoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/APhoto.app/APhoto";
+			};
+			name = Debug;
+		};
+		9776DDDE1C860171001A141F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = APhotoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = mobi.sudo.APhotoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/APhoto.app/APhoto";
+			};
+			name = Release;
+		};
+		9776DDE01C860171001A141F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = APhotoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = mobi.sudo.APhotoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = APhoto;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		9776DDE11C860171001A141F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = APhotoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = mobi.sudo.APhotoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = APhoto;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9776DDAC1C860171001A141F /* Build configuration list for PBXProject "APhoto" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9776DDD71C860171001A141F /* Debug */,
+				9776DDD81C860171001A141F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9776DDD91C860171001A141F /* Build configuration list for PBXNativeTarget "APhoto" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9776DDDA1C860171001A141F /* Debug */,
+				9776DDDB1C860171001A141F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		9776DDDC1C860171001A141F /* Build configuration list for PBXNativeTarget "APhotoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9776DDDD1C860171001A141F /* Debug */,
+				9776DDDE1C860171001A141F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		9776DDDF1C860171001A141F /* Build configuration list for PBXNativeTarget "APhotoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9776DDE01C860171001A141F /* Debug */,
+				9776DDE11C860171001A141F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9776DDA91C860171001A141F /* Project object */;
+}

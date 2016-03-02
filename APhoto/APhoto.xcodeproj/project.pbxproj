@@ -8,12 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		9776DDB51C860171001A141F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9776DDB41C860171001A141F /* AppDelegate.swift */; };
-		9776DDB71C860171001A141F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9776DDB61C860171001A141F /* ViewController.swift */; };
+		9776DDB71C860171001A141F /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9776DDB61C860171001A141F /* CameraController.swift */; };
 		9776DDBA1C860171001A141F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9776DDB81C860171001A141F /* Main.storyboard */; };
 		9776DDBC1C860171001A141F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9776DDBB1C860171001A141F /* Assets.xcassets */; };
 		9776DDBF1C860171001A141F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9776DDBD1C860171001A141F /* LaunchScreen.storyboard */; };
 		9776DDCA1C860171001A141F /* APhotoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9776DDC91C860171001A141F /* APhotoTests.swift */; };
 		9776DDD51C860171001A141F /* APhotoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9776DDD41C860171001A141F /* APhotoUITests.swift */; };
+		97F26DC71C875DCC00D3F5CA /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F26DC61C875DCC00D3F5CA /* ImageViewController.swift */; };
+		97F26DC91C8763B300D3F5CA /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F26DC81C8763B300D3F5CA /* ImageCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +38,7 @@
 /* Begin PBXFileReference section */
 		9776DDB11C860171001A141F /* APhoto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = APhoto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9776DDB41C860171001A141F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		9776DDB61C860171001A141F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		9776DDB61C860171001A141F /* CameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
 		9776DDB91C860171001A141F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9776DDBB1C860171001A141F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9776DDBE1C860171001A141F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -47,6 +49,8 @@
 		9776DDD01C860171001A141F /* APhotoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = APhotoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9776DDD41C860171001A141F /* APhotoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APhotoUITests.swift; sourceTree = "<group>"; };
 		9776DDD61C860171001A141F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		97F26DC61C875DCC00D3F5CA /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
+		97F26DC81C8763B300D3F5CA /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,8 +102,9 @@
 			isa = PBXGroup;
 			children = (
 				9776DDB41C860171001A141F /* AppDelegate.swift */,
-				9776DDB61C860171001A141F /* ViewController.swift */,
+				9776DDB61C860171001A141F /* CameraController.swift */,
 				9776DDB81C860171001A141F /* Main.storyboard */,
+				97F26DCA1C8763BF00D3F5CA /* ImageView */,
 				9776DDBB1C860171001A141F /* Assets.xcassets */,
 				9776DDBD1C860171001A141F /* LaunchScreen.storyboard */,
 				9776DDC01C860171001A141F /* Info.plist */,
@@ -123,6 +128,15 @@
 				9776DDD61C860171001A141F /* Info.plist */,
 			);
 			path = APhotoUITests;
+			sourceTree = "<group>";
+		};
+		97F26DCA1C8763BF00D3F5CA /* ImageView */ = {
+			isa = PBXGroup;
+			children = (
+				97F26DC81C8763B300D3F5CA /* ImageCollectionViewCell.swift */,
+				97F26DC61C875DCC00D3F5CA /* ImageViewController.swift */,
+			);
+			name = ImageView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -256,7 +270,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9776DDB71C860171001A141F /* ViewController.swift in Sources */,
+				9776DDB71C860171001A141F /* CameraController.swift in Sources */,
+				97F26DC71C875DCC00D3F5CA /* ImageViewController.swift in Sources */,
+				97F26DC91C8763B300D3F5CA /* ImageCollectionViewCell.swift in Sources */,
 				9776DDB51C860171001A141F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -484,6 +500,7 @@
 				9776DDDB1C860171001A141F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9776DDDC1C860171001A141F /* Build configuration list for PBXNativeTarget "APhotoTests" */ = {
 			isa = XCConfigurationList;
@@ -492,6 +509,7 @@
 				9776DDDE1C860171001A141F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9776DDDF1C860171001A141F /* Build configuration list for PBXNativeTarget "APhotoUITests" */ = {
 			isa = XCConfigurationList;
@@ -500,6 +518,7 @@
 				9776DDE11C860171001A141F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

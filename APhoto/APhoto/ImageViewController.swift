@@ -12,6 +12,7 @@ class ImageViewController: UIViewController, UICollectionViewDataSource {
 
     // Outlets
     @IBOutlet var mainImageView: UIImageView!
+    @IBOutlet var labelSaved: UILabel!
     
     // Variables
     var image:UIImage!
@@ -33,6 +34,32 @@ class ImageViewController: UIViewController, UICollectionViewDataSource {
     func initialSetup() {
         self.mainImageView.image = self.image;
     }
+
+    
+    // MARK: Actions
+    @IBAction func handleDoubleTap(recognizer:UITapGestureRecognizer) {
+        print("Touched")
+        UIImageWriteToSavedPhotosAlbum(self.image, self, "image:didFinishSavingWithError:contextInfo:", nil)
+    }
+    
+    @IBAction func handleSwipeBack(recognizer:UISwipeGestureRecognizer) {
+        print("Swiped")
+        self.dismissViewControllerAnimated(false, completion: nil)
+    }
+    
+    // MARK: Image Saving Delegates
+    
+    func image(image: UIImage, didFinishSavingWithError error: NSError?, contextInfo:UnsafePointer<Void>) {
+        if error == nil {
+            let ac = UIAlertController(title: "Saved!", message: "Your altered image has been saved to your photos.", preferredStyle: .Alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            presentViewController(ac, animated: true, completion: nil)
+        } else {
+            let ac = UIAlertController(title: "Save error", message: error?.localizedDescription, preferredStyle: .Alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            presentViewController(ac, animated: true, completion: nil)
+        }
+    }
     
     // MARK: Collection View Delegates
     
@@ -52,6 +79,7 @@ class ImageViewController: UIViewController, UICollectionViewDataSource {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let object:DKAEffectObject = DKAEffectManager.sharedInstance.effectObjectsArray.objectAtIndex(indexPath.item) as! DKAEffectObject
         self.mainImageView.image = object.image
+        self.image = object.image
     }
     
 }

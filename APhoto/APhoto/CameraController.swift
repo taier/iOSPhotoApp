@@ -34,14 +34,12 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     func lauchCamera() {
         if UIImagePickerController.isSourceTypeAvailable(
             UIImagePickerControllerSourceType.Camera) {
-                
                 imagePicker = UIImagePickerController()
                 imagePicker.delegate = self
                 imagePicker.sourceType =
                     UIImagePickerControllerSourceType.Camera
                 imagePicker.mediaTypes = [kUTTypeImage as String]
                 imagePicker.allowsEditing = false
-                
                 self.presentViewController(imagePicker, animated: false,
                     completion: nil)
         } else {
@@ -50,11 +48,12 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     }
     
     // MARK: Navigation
-    
     func moveToImageViewControllerWithImage(image: UIImage) {
         let controller:ImageViewController = storyboard?.instantiateViewControllerWithIdentifier("imageViewController") as! ImageViewController
-        controller.image = image
-        self.presentViewController(controller, animated: false, completion: nil)
+        controller.image = resizeImage(image, newWidth: 400)
+        self.presentViewController(controller, animated: false,completion:{ () -> Void in
+            self.takePhoto = false
+        })
     }
     
     // MARK: Camera Delegates
@@ -65,5 +64,20 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         imagePicker.dismissViewControllerAnimated(false, completion: nil)
         moveToImageViewControllerWithImage(image)
     }
+    
+    // MARK : Helpers
+    
+    func resizeImage(image: UIImage, newWidth: CGFloat) -> UIImage {
+        
+        let scale = newWidth / image.size.width
+        let newHeight = image.size.height * scale
+        UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight))
+        image.drawInRect(CGRectMake(0, 0, newWidth, newHeight))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage
+    }
+
 }
 

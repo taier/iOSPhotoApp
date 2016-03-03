@@ -16,6 +16,8 @@
 		9776DDD51C860171001A141F /* APhotoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9776DDD41C860171001A141F /* APhotoUITests.swift */; };
 		97F26DC71C875DCC00D3F5CA /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F26DC61C875DCC00D3F5CA /* ImageViewController.swift */; };
 		97F26DC91C8763B300D3F5CA /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F26DC81C8763B300D3F5CA /* ImageCollectionViewCell.swift */; };
+		B703A6971C878CCC0025B3A0 /* DKAEffectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B703A6961C878CCC0025B3A0 /* DKAEffectManager.swift */; };
+		B703A69A1C878CEC0025B3A0 /* DKAEffectObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B703A6991C878CEC0025B3A0 /* DKAEffectObject.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		9776DDD61C860171001A141F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97F26DC61C875DCC00D3F5CA /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		97F26DC81C8763B300D3F5CA /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		B703A6961C878CCC0025B3A0 /* DKAEffectManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKAEffectManager.swift; sourceTree = "<group>"; };
+		B703A6991C878CEC0025B3A0 /* DKAEffectObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKAEffectObject.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,12 +106,10 @@
 			isa = PBXGroup;
 			children = (
 				9776DDB41C860171001A141F /* AppDelegate.swift */,
-				9776DDB61C860171001A141F /* CameraController.swift */,
-				9776DDB81C860171001A141F /* Main.storyboard */,
-				97F26DCA1C8763BF00D3F5CA /* ImageView */,
-				9776DDBB1C860171001A141F /* Assets.xcassets */,
-				9776DDBD1C860171001A141F /* LaunchScreen.storyboard */,
-				9776DDC01C860171001A141F /* Info.plist */,
+				B703A69D1C878D160025B3A0 /* Controllers */,
+				B703A69C1C878D080025B3A0 /* UI */,
+				B703A6981C878CD00025B3A0 /* EffectManager */,
+				B703A69B1C878CFE0025B3A0 /* Assets */,
 			);
 			path = APhoto;
 			sourceTree = "<group>";
@@ -137,6 +139,42 @@
 				97F26DC61C875DCC00D3F5CA /* ImageViewController.swift */,
 			);
 			name = ImageView;
+			sourceTree = "<group>";
+		};
+		B703A6981C878CD00025B3A0 /* EffectManager */ = {
+			isa = PBXGroup;
+			children = (
+				B703A6961C878CCC0025B3A0 /* DKAEffectManager.swift */,
+				B703A6991C878CEC0025B3A0 /* DKAEffectObject.swift */,
+			);
+			name = EffectManager;
+			sourceTree = "<group>";
+		};
+		B703A69B1C878CFE0025B3A0 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				9776DDBB1C860171001A141F /* Assets.xcassets */,
+				9776DDC01C860171001A141F /* Info.plist */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		B703A69C1C878D080025B3A0 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				9776DDB81C860171001A141F /* Main.storyboard */,
+				9776DDBD1C860171001A141F /* LaunchScreen.storyboard */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		B703A69D1C878D160025B3A0 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				97F26DCA1C8763BF00D3F5CA /* ImageView */,
+				9776DDB61C860171001A141F /* CameraController.swift */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -207,6 +245,7 @@
 				TargetAttributes = {
 					9776DDB01C860171001A141F = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 99TE4Z2NY7;
 					};
 					9776DDC41C860171001A141F = {
 						CreatedOnToolsVersion = 7.2;
@@ -272,7 +311,9 @@
 			files = (
 				9776DDB71C860171001A141F /* CameraController.swift in Sources */,
 				97F26DC71C875DCC00D3F5CA /* ImageViewController.swift in Sources */,
+				B703A69A1C878CEC0025B3A0 /* DKAEffectObject.swift in Sources */,
 				97F26DC91C8763B300D3F5CA /* ImageCollectionViewCell.swift in Sources */,
+				B703A6971C878CCC0025B3A0 /* DKAEffectManager.swift in Sources */,
 				9776DDB51C860171001A141F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -413,11 +454,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = APhoto/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = mobi.sudo.APhoto;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -425,11 +468,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = APhoto/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = mobi.sudo.APhoto;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

@@ -15,6 +15,7 @@ class ImageViewController: UIViewController, UICollectionViewDataSource {
     
     // Variables
     var image:UIImage!
+    var imageBlackAndWhite:UIImage!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,29 +37,21 @@ class ImageViewController: UIViewController, UICollectionViewDataSource {
     // MARK: Collection View Delegates
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int  {
-        return 12
+        return DKAEffectManager.sharedInstance.createEffectsItemsAndGetCount(self.image)
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell  {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("imageCell", forIndexPath: indexPath) as! ImageCollectionViewCell
+        let object:DKAEffectObject = DKAEffectManager.sharedInstance.effectObjectsArray.objectAtIndex(indexPath.item) as! DKAEffectObject
+        cell.imageView.image = object.image
+        cell.name.text = object.effectName
+        
         return cell
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        self.mainImageView.image = convertToGrayScale(self.image);
+        let object:DKAEffectObject = DKAEffectManager.sharedInstance.effectObjectsArray.objectAtIndex(indexPath.item) as! DKAEffectObject
+        self.mainImageView.image = object.image
     }
     
-    // MARK : Filters
-    
-    func convertToGrayScale(image : UIImage) -> UIImage {
-        
-        let imgOrientation = image.imageOrientation
-        let imgScale = image.scale
-        
-        let filter: CIFilter = CIFilter(name: "CIPhotoEffectMono")!
-        filter.setDefaults()
-        filter.setValue(CoreImage.CIImage(image: image)!, forKey: kCIInputImageKey)
-        
-        return UIImage(CGImage: CIContext(options:nil).createCGImage(filter.outputImage!, fromRect: filter.outputImage!.extent), scale:imgScale, orientation:imgOrientation)
-    }
 }

@@ -7,33 +7,28 @@
 //
 
 import UIKit
-import MobileCoreServices // for kUTTypeImage // Remove
 import AVFoundation
 
 class CameraController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
 
     // Variables
-    var imagePicker: UIImagePickerController! //Remove
-    var takePhoto:Bool = false
-    
     let captureSession = AVCaptureSession()
-    var captureDevice : AVCaptureDevice?
+    let stillImageOutput = AVCaptureStillImageOutput()
+    var mainCaptureDevice = AVCaptureDevice?()
     
     @IBOutlet weak var viewCamera: UIView!
+    @IBOutlet var viewSlider: UISlider!
+    @IBOutlet var labelCurrentValue: UILabel!
+    @IBOutlet var labelInfo: UILabel!
+    @IBOutlet var viewControlls: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        captureSession.sessionPreset = AVCaptureSessionPresetLow
-        let devices = AVCaptureDevice.devices()
-        print(devices)
-        
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        if(!takePhoto) {
-            lauchCamera()
-        }
+        lauchCamera()
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,101 +36,103 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         // Dispose of any resources that can be recreated.
     }
 
-    func lauchCamera() {
-        captureSession.sessionPreset = AVCaptureSessionPresetLow
-        let devices = AVCaptureDevice.devices()
-        // Loop through all the capture devices on this phone
-        for device in devices {
-            // Make sure this particular device supports video
-            if (device.hasMediaType(AVMediaTypeVideo)) {
-                // Finally check the position and confirm we've got the back camera
-                if(device.position == AVCaptureDevicePosition.Back) {
-                    captureDevice = device as? AVCaptureDevice
-                }
-            }
-        }
+    
+    // MARK: SetupStuff
+    func updateValueLabelWithValue(value:Float) {
+        self.labelCurrentValue.text = String(format: "%.0f",value)
+    }
+    
+    func setupDevice() {
         
-        if captureDevice != nil {
-            beginSession()
+    }
+    
+    func lauchCamera() {
+        
+        if(captureSession.running) {
+            return;
+        }
+
+        let devices = AVCaptureDevice.devices().filter{ $0.hasMediaType(AVMediaTypeVideo) && $0.position == AVCaptureDevicePosition.Back }
+        if let captureDevice = devices.first as? AVCaptureDevice  {
+            
+            captureSession.sessionPreset = AVCaptureSessionPresetLow
+            stillImageOutput.outputSettings = [AVVideoCodecKey:AVVideoCodecJPEG]
+            
+            mainCaptureDevice = captureDevice
+            captureSession.addInput(try!AVCaptureDeviceInput(device: captureDevice))
+            captureSession.sessionPreset = AVCaptureSessionPresetPhoto
+            captureSession.startRunning()
+            stillImageOutput.outputSettings = [AVVideoCodecKey:AVVideoCodecJPEG]
+            if captureSession.canAddOutput(stillImageOutput) {
+                captureSession.addOutput(stillImageOutput)
+            }
+            if let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession) {
+                previewLayer.bounds = self.viewCamera.frame
+                previewLayer.position = CGPointMake(self.viewCamera.bounds.midX, self.viewCamera.bounds.midY)
+                previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
+                let cameraPreview = UIView(frame: self.viewCamera.frame)
+                cameraPreview.layer.addSublayer(previewLayer)
+                view.addSubview(cameraPreview)
+            }
         }
     }
     
     // MAR: Camera stuff
-    
-    func beginSession() {
-        
-        configureDevice()
-        
-        try! captureSession.addInput(AVCaptureDeviceInput(device: captureDevice))
-        
-        let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        self.view.layer.addSublayer(previewLayer)
-        previewLayer?.frame = self.viewCamera.layer.frame
-        captureSession.startRunning()
-    }
-    
-    func configureDevice() {
-        if let device = captureDevice {
-            try! device.lockForConfiguration()
-            device.focusMode = .Locked
-            device.unlockForConfiguration()
+
+    func processPhoto() {
+        if let videoConnection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo) {
+            stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection) {
+                (imageDataSampleBuffer, error) -> Void in
+                let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
+                self.moveToImageViewControllerWithImage(UIImage(data: imageData)!)
+            }
         }
     }
     
-    func updateDeviceSettings(focusValue : Float, isoValue : Float) {
-        if let device = captureDevice {
-            
+    func setupControllsFroISO() {
+        if let device = mainCaptureDevice {
             do {
                 try device.lockForConfiguration()
             } catch {
                 return
             }
-                device.setFocusModeLockedWithLensPosition(focusValue, completionHandler: { (time) -> Void in
-                    //
-                })
-                
-                // Adjust the iso to clamp between minIso and maxIso based on the active format
-                let minISO = device.activeFormat.minISO
-                let maxISO = device.activeFormat.maxISO
-                let clampedISO = isoValue * (maxISO - minISO) + minISO
-                
-                device.setExposureModeCustomWithDuration(AVCaptureExposureDurationCurrent, ISO: clampedISO, completionHandler: { (time) -> Void in
-                    //
-                })
-                
+            
+            // Can change iOS
+            self.viewSlider.minimumValue = device.activeFormat.minISO
+            self.viewSlider.maximumValue = device.activeFormat.maxISO
+            self.viewSlider.value = device.ISO
+            self.labelInfo.text = "ISO"
+            self.viewControlls.hidden = false;
+            updateValueLabelWithValue(device.ISO)
+        }
+        
+    }
+    
+    // MARK: Actions
+    
+    @IBAction func buttonTakePhoto(sender: AnyObject) {
+       processPhoto()
+    }
+    
+    @IBAction func buttonISO(sender: AnyObject) {
+        setupControllsFroISO()
+    }
+    
+    @IBAction func sliderValueChange(sender: UISlider) {
+        if let device = mainCaptureDevice {
+            do {
+                try device.lockForConfiguration()
+            } catch {
+                return
+            }
+            
+            let value:Float = Float(sender.value);
+            updateValueLabelWithValue(value)
+            
+            device.setExposureModeCustomWithDuration(AVCaptureExposureDurationCurrent, ISO:value, completionHandler: { (CMTime) -> Void in
                 device.unlockForConfiguration()
+            })
         }
-    }
-    
-    let screenWidth = UIScreen.mainScreen().bounds.size.width
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        if let touch =  touches.first{
-            let touchPer = touchPercent(touch)
-            updateDeviceSettings(Float(touchPer.x), isoValue: 0.5)
-        }
-      
-    }
-    
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        if let touch =  touches.first{
-            let touchPer = touchPercent(touch)
-            updateDeviceSettings(Float(touchPer.x), isoValue: 1)
-        }
-    }
-    
-    func touchPercent(touch : UITouch) -> CGPoint {
-        // Get the dimensions of the screen in points
-        let screenSize = UIScreen.mainScreen().bounds.size
-        
-        // Create an empty CGPoint object set to 0, 0
-        var touchPer = CGPointZero
-        
-        // Set the x and y values to be the value of the tapped position, divided by the width/height of the screen
-        touchPer.x = touch.locationInView(self.view).x / screenSize.width
-        touchPer.y = touch.locationInView(self.view).y / screenSize.height
-        
-        // Return the populated CGPoint
-        return touchPer
     }
     
     // MARK: Navigation
@@ -143,19 +140,8 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         let controller:ImageViewController = storyboard?.instantiateViewControllerWithIdentifier("imageViewController") as! ImageViewController
         controller.image = resizeImage(image, newWidth: 400)
         self.presentViewController(controller, animated: false,completion:{ () -> Void in
-            self.takePhoto = false
         })
     }
-    
-    // MARK: Camera Delegates
-    
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
-        // you code
-        takePhoto = true
-        imagePicker.dismissViewControllerAnimated(false, completion: nil)
-        moveToImageViewControllerWithImage(image)
-    }
-    
     // MARK : Helpers
     
     func resizeImage(image: UIImage, newWidth: CGFloat) -> UIImage {

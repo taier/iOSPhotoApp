@@ -11,16 +11,28 @@ import AVFoundation
 
 class CameraController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
 
+    // Enums and stuff
+    enum ManualControllsMode {
+        case IOS
+        case Shutter
+    }
+    
     // Variables
     let captureSession = AVCaptureSession()
     let stillImageOutput = AVCaptureStillImageOutput()
     var mainCaptureDevice = AVCaptureDevice?()
+    var currentManualControllsMode = ManualControllsMode?()
+    
+    var currentShutter = CMTime?()
+    var currentISO = Float?()
     
     @IBOutlet weak var viewCamera: UIView!
     @IBOutlet var viewSlider: UISlider!
     @IBOutlet var labelCurrentValue: UILabel!
     @IBOutlet var labelInfo: UILabel!
     @IBOutlet var viewControlls: UIView!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,11 +114,69 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             self.viewSlider.maximumValue = device.activeFormat.maxISO
             self.viewSlider.value = device.ISO
             self.labelInfo.text = "ISO"
+            currentManualControllsMode = ManualControllsMode.IOS;
             self.viewControlls.hidden = false;
             updateValueLabelWithValue(device.ISO)
+            device.unlockForConfiguration()
         }
         
     }
+    
+    func setupControllsForShutter() {
+        
+        if let device = mainCaptureDevice {
+            do {
+                try device.lockForConfiguration()
+            } catch {
+                return
+            }
+            
+            // Can change Shutter
+            self.viewSlider.minimumValue = Float(CMTimeGetSeconds(device.activeFormat.minExposureDuration))
+            self.viewSlider.maximumValue = Float(CMTimeGetSeconds(device.activeFormat.maxExposureDuration))
+            self.viewSlider.value =  Float(CMTimeGetSeconds(device.exposureDuration))
+            self.labelInfo.text = "Shutter"
+            currentManualControllsMode = ManualControllsMode.Shutter;
+            self.viewControlls.hidden = false;
+            updateValueLabelWithValue(1/(self.viewSlider.value * 0.01))
+            device.unlockForConfiguration()
+        }
+    }
+    
+    func ChangeISOWithValue(value:Float) {
+        if let device = mainCaptureDevice {
+            do {
+                try device.lockForConfiguration()
+            } catch {
+                return
+            }
+            
+            updateValueLabelWithValue(value)
+            self.currentISO = value
+            let shutter = self.currentShutter == nil ? AVCaptureExposureDurationCurrent : self.currentShutter
+            device.setExposureModeCustomWithDuration(shutter!, ISO:value, completionHandler: { (CMTime) -> Void in
+                device.unlockForConfiguration()
+            })
+        }
+    }
+    
+    func ChangeShutterWithValue(value:Float) {
+        if let device = mainCaptureDevice {
+            do {
+                try device.lockForConfiguration()
+            } catch {
+                return
+            }
+            
+            updateValueLabelWithValue(1/(value * 0.01))
+            self.currentShutter = CMTimeMake(Int64(value * 1000000000) , device.exposureDuration.timescale)
+            let ISO = self.currentISO == nil ? AVCaptureISOCurrent : self.currentISO;
+            device.setExposureModeCustomWithDuration(self.currentShutter!, ISO:ISO!, completionHandler: { (CMTime) -> Void in
+                device.unlockForConfiguration()
+            })
+        }
+    }
+
     
     // MARK: Actions
     
@@ -117,21 +187,17 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     @IBAction func buttonISO(sender: AnyObject) {
         setupControllsFroISO()
     }
+    @IBAction func buttonShutter(sender: AnyObject) {
+        setupControllsForShutter()
+    }
     
     @IBAction func sliderValueChange(sender: UISlider) {
-        if let device = mainCaptureDevice {
-            do {
-                try device.lockForConfiguration()
-            } catch {
-                return
-            }
-            
-            let value:Float = Float(sender.value);
-            updateValueLabelWithValue(value)
-            
-            device.setExposureModeCustomWithDuration(AVCaptureExposureDurationCurrent, ISO:value, completionHandler: { (CMTime) -> Void in
-                device.unlockForConfiguration()
-            })
+        let value:Float = Float(sender.value);
+        
+        if(currentManualControllsMode == ManualControllsMode.IOS) {
+           ChangeISOWithValue(value)
+        } else if (currentManualControllsMode == ManualControllsMode.Shutter) {
+            ChangeShutterWithValue(value)
         }
     }
     

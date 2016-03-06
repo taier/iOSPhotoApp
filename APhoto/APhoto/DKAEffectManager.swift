@@ -37,7 +37,6 @@ class DKAEffectManager: NSObject {
     }
     
     // MARK: Filters
-    
     func converToFilterWithName(filterName: String, image: UIImage) -> UIImage {
         let imgOrientation = image.imageOrientation
         let imgScale = image.scale

@@ -11,21 +11,23 @@ import AVFoundation
 
 class CameraController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
 
-    // Enums and stuff
+    // MARK: Enums
     enum ManualControllsMode {
         case IOS
         case Shutter
     }
     
-    // Variables
+    // MARK: Variables
     let captureSession = AVCaptureSession()
     let stillImageOutput = AVCaptureStillImageOutput()
     var mainCaptureDevice = AVCaptureDevice?()
     var currentManualControllsMode = ManualControllsMode?()
     
+    // Camera settings related
     var currentShutter = CMTime?()
     var currentISO = Float?()
     
+    // MARK: Outlets
     @IBOutlet weak var viewCamera: UIView!
     @IBOutlet var viewSlider: UISlider!
     @IBOutlet var labelCurrentValue: UILabel!
@@ -33,14 +35,14 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     @IBOutlet var viewControlls: UIView!
     
     
-    
+    //MARK: Live cycle
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        lauchCamera()
+        lauchCamera() // For correct frame
     }
 
     override func didReceiveMemoryWarning() {
@@ -54,30 +56,27 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         self.labelCurrentValue.text = String(format: "%.0f",value)
     }
     
-    func setupDevice() {
-        
-    }
-    
     func lauchCamera() {
         
-        if(captureSession.running) {
+        if(captureSession.running) { // If already have active camera
             return;
         }
 
         let devices = AVCaptureDevice.devices().filter{ $0.hasMediaType(AVMediaTypeVideo) && $0.position == AVCaptureDevicePosition.Back }
         if let captureDevice = devices.first as? AVCaptureDevice  {
-            
-            captureSession.sessionPreset = AVCaptureSessionPresetLow
+            // Quality
+            captureSession.sessionPreset = AVCaptureSessionPresetPhoto
             stillImageOutput.outputSettings = [AVVideoCodecKey:AVVideoCodecJPEG]
             
+            // Streaming session
             mainCaptureDevice = captureDevice
             captureSession.addInput(try!AVCaptureDeviceInput(device: captureDevice))
-            captureSession.sessionPreset = AVCaptureSessionPresetPhoto
             captureSession.startRunning()
-            stillImageOutput.outputSettings = [AVVideoCodecKey:AVVideoCodecJPEG]
             if captureSession.canAddOutput(stillImageOutput) {
                 captureSession.addOutput(stillImageOutput)
             }
+            
+            // Preview
             if let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession) {
                 previewLayer.bounds = self.viewCamera.frame
                 previewLayer.position = CGPointMake(self.viewCamera.bounds.midX, self.viewCamera.bounds.midY)
@@ -90,8 +89,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     }
     
     // MAR: Camera stuff
-
-    func processPhoto() {
+    func processPhoto() { // Save and move to next controller
         if let videoConnection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo) {
             stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection) {
                 (imageDataSampleBuffer, error) -> Void in
@@ -102,6 +100,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     }
     
     func setupControllsFroISO() {
+        // Check for available device
         if let device = mainCaptureDevice {
             do {
                 try device.lockForConfiguration()
@@ -109,21 +108,27 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
                 return
             }
             
-            // Can change iOS
+            // Set slider appearance
             self.viewSlider.minimumValue = device.activeFormat.minISO
             self.viewSlider.maximumValue = device.activeFormat.maxISO
             self.viewSlider.value = device.ISO
+            
+            // Update UI
             self.labelInfo.text = "ISO"
-            currentManualControllsMode = ManualControllsMode.IOS;
-            self.viewControlls.hidden = false;
             updateValueLabelWithValue(device.ISO)
+            self.viewControlls.hidden = false;
+            
+            // Change currenct application state
+            currentManualControllsMode = ManualControllsMode.IOS;
+            
+            //TODO:Check if can remove
             device.unlockForConfiguration()
         }
         
     }
     
     func setupControllsForShutter() {
-        
+        // Check for available device
         if let device = mainCaptureDevice {
             do {
                 try device.lockForConfiguration()
@@ -131,19 +136,26 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
                 return
             }
             
-            // Can change Shutter
+            // Set Slider appearance
             self.viewSlider.minimumValue = Float(CMTimeGetSeconds(device.activeFormat.minExposureDuration))
             self.viewSlider.maximumValue = Float(CMTimeGetSeconds(device.activeFormat.maxExposureDuration))
             self.viewSlider.value =  Float(CMTimeGetSeconds(device.exposureDuration))
+            
+            // Update UI
             self.labelInfo.text = "Shutter"
-            currentManualControllsMode = ManualControllsMode.Shutter;
-            self.viewControlls.hidden = false;
             updateValueLabelWithValue(1/(self.viewSlider.value * 0.01))
+            self.viewControlls.hidden = false;
+
+            // Change currenct application state
+            currentManualControllsMode = ManualControllsMode.Shutter;
+            
+            //TODO:Check if can remove
             device.unlockForConfiguration()
         }
     }
     
     func ChangeISOWithValue(value:Float) {
+        // Check for available device
         if let device = mainCaptureDevice {
             do {
                 try device.lockForConfiguration()
@@ -151,9 +163,16 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
                 return
             }
             
+            // Update UI
             updateValueLabelWithValue(value)
+            
+            // Save current Value for other controlls reuse
             self.currentISO = value
+            
+            // Get selected shutter if exist
             let shutter = self.currentShutter == nil ? AVCaptureExposureDurationCurrent : self.currentShutter
+            
+            // Change camere controll value
             device.setExposureModeCustomWithDuration(shutter!, ISO:value, completionHandler: { (CMTime) -> Void in
                 device.unlockForConfiguration()
             })
@@ -161,6 +180,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     }
     
     func ChangeShutterWithValue(value:Float) {
+        // Check for available device
         if let device = mainCaptureDevice {
             do {
                 try device.lockForConfiguration()
@@ -168,9 +188,16 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
                 return
             }
             
+            // Update UI
             updateValueLabelWithValue(1/(value * 0.01))
+            
+            // Save current Value for other controlls reuse
             self.currentShutter = CMTimeMake(Int64(value * 1000000000) , device.exposureDuration.timescale)
+            
+            // Get selected ISO if exist
             let ISO = self.currentISO == nil ? AVCaptureISOCurrent : self.currentISO;
+            
+            // Change camera controll value
             device.setExposureModeCustomWithDuration(self.currentShutter!, ISO:ISO!, completionHandler: { (CMTime) -> Void in
                 device.unlockForConfiguration()
             })
@@ -208,10 +235,10 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         self.presentViewController(controller, animated: false,completion:{ () -> Void in
         })
     }
-    // MARK : Helpers
     
+    // MARK : Helpers
+    //TODO: Move to another class
     func resizeImage(image: UIImage, newWidth: CGFloat) -> UIImage {
-        
         let scale = newWidth / image.size.width
         let newHeight = image.size.height * scale
         UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight))

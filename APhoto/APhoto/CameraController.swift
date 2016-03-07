@@ -26,6 +26,8 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     // Camera settings related
     var currentShutter = CMTime?()
     var currentISO = Float?()
+    var arrayISO = [Float]()
+    var arrayShutter = [Float]()
     
     // MARK: Outlets
     @IBOutlet weak var viewCamera: UIView!
@@ -34,10 +36,11 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     @IBOutlet var labelInfo: UILabel!
     @IBOutlet var viewControlls: UIView!
     
-    
     //MARK: Live cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        prepareCamera()
+        prepareISO()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -56,12 +59,30 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         self.labelCurrentValue.text = String(format: "%.0f",value)
     }
     
+    func updateValueLabelWithShutterValue(value:Float) {
+        self.labelCurrentValue.text = String(format: "1/%.0fs",value)
+    }
+    
     func lauchCamera() {
         
-        if(captureSession.running) { // If already have active camera
-            return;
+//        if(captureSession.running) { // If already have active camera
+//            return;
+//        }
+        
+        // Preview
+        if let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession) {
+            previewLayer.bounds = self.viewCamera.frame
+            previewLayer.position = CGPointMake(self.viewCamera.bounds.midX, self.viewCamera.bounds.midY)
+            previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
+            let cameraPreview = UIView(frame: self.viewCamera.frame)
+            cameraPreview.layer.addSublayer(previewLayer)
+            view.addSubview(cameraPreview)
         }
 
+    }
+    
+    func prepareCamera() {
+        
         let devices = AVCaptureDevice.devices().filter{ $0.hasMediaType(AVMediaTypeVideo) && $0.position == AVCaptureDevicePosition.Back }
         if let captureDevice = devices.first as? AVCaptureDevice  {
             // Quality
@@ -75,16 +96,28 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             if captureSession.canAddOutput(stillImageOutput) {
                 captureSession.addOutput(stillImageOutput)
             }
-            
-            // Preview
-            if let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession) {
-                previewLayer.bounds = self.viewCamera.frame
-                previewLayer.position = CGPointMake(self.viewCamera.bounds.midX, self.viewCamera.bounds.midY)
-                previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
-                let cameraPreview = UIView(frame: self.viewCamera.frame)
-                cameraPreview.layer.addSublayer(previewLayer)
-                view.addSubview(cameraPreview)
+        }
+    }
+    
+    func prepareISO() {
+        if let device = mainCaptureDevice {
+            do {
+                try device.lockForConfiguration()
+            } catch {
+                return
             }
+            
+            let minISO = Float(ceil(device.activeFormat.minISO/10)*10)
+            let maxISO = Float(round(device.activeFormat.maxISO/1000)*1000)
+            
+            var newISO:Float = minISO
+            while (newISO <= maxISO) {
+                let digArray = Int(newISO).description.characters.map{Int(String($0)) ?? 0}
+                
+                arrayISO.append(newISO)
+//                newISO = Int(newISO/digArray.count *10) * 1.25
+            }
+            
         }
     }
     
@@ -98,6 +131,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             }
         }
     }
+
     
     func setupControllsFroISO() {
         // Check for available device
@@ -143,7 +177,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             
             // Update UI
             self.labelInfo.text = "Shutter"
-            updateValueLabelWithValue(1/(self.viewSlider.value * 0.01))
+            updateValueLabelWithShutterValue(1/self.viewSlider.value)
             self.viewControlls.hidden = false;
 
             // Change currenct application state
@@ -189,7 +223,8 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             }
             
             // Update UI
-            updateValueLabelWithValue(1/(value * 0.01))
+            updateValueLabelWithShutterValue(1/value)
+            print(value)
             
             // Save current Value for other controlls reuse
             self.currentShutter = CMTimeMake(Int64(value * 1000000000) , device.exposureDuration.timescale)
@@ -227,6 +262,26 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             ChangeShutterWithValue(value)
         }
     }
+    
+    // MARK: Collection View Delegates
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int  {
+        return arrayISO.count
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell  {
+
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CellShutter", forIndexPath: indexPath) as! ManualControllCollectionViewCell
+        let iso = arrayISO[indexPath.item]
+        cell.labelMain.text =  String(format: "%.0f",iso)
+        return cell
+    }
+    
+//    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+//        let object:DKAEffectObject = DKAEffectManager.sharedInstance.effectObjectsArray.objectAtIndex(indexPath.item) as! DKAEffectObject
+//        self.mainImageView.image = object.image
+//        self.image = object.image
+//    }
+
     
     // MARK: Navigation
     func moveToImageViewControllerWithImage(image: UIImage) {

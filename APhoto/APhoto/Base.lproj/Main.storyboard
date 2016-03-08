@@ -295,6 +295,8 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
+                        <outlet property="collectionViewISO" destination="sbn-3J-mpT" id="nwf-P6-R9k"/>
+                        <outlet property="collectionViewShutter" destination="yPp-uz-pSu" id="uO8-La-D2x"/>
                         <outlet property="labelCurrentValue" destination="Vu3-Kf-wv8" id="OrE-5c-gNP"/>
                         <outlet property="labelInfo" destination="j8y-lr-xQN" id="U6b-0J-XhI"/>
                         <outlet property="viewCamera" destination="UmJ-Ye-fZy" id="iFG-fK-Uaz"/>

@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class CameraController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
+class CameraController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource  {
 
     // MARK: Enums
     enum ManualControllsMode {
@@ -36,11 +36,15 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     @IBOutlet var labelInfo: UILabel!
     @IBOutlet var viewControlls: UIView!
     
+    @IBOutlet var collectionViewShutter: UICollectionView!
+    @IBOutlet var collectionViewISO: UICollectionView!
+    
     //MARK: Live cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         prepareCamera()
         prepareISO()
+        prepareShutter()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -112,14 +116,35 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             
             var newISO:Float = minISO
             while (newISO <= maxISO) {
-                let digArray = Int(newISO).description.characters.map{Int(String($0)) ?? 0}
-                
                 arrayISO.append(newISO)
-//                newISO = Int(newISO/digArray.count *10) * 1.25
+                newISO = newISO * 1.25
+                print(newISO)
             }
             
         }
     }
+    
+    func prepareShutter() {
+        if let device = mainCaptureDevice {
+            do {
+                try device.lockForConfiguration()
+            } catch {
+                return
+            }
+            
+            let minShutter = Float(CMTimeGetSeconds(device.activeFormat.minExposureDuration))
+            let maxShutter = Float(CMTimeGetSeconds(device.activeFormat.maxExposureDuration))
+            
+            var newShutter:Float = minShutter
+            while (newShutter <= maxShutter) {
+                arrayShutter.append(newShutter)
+                newShutter = newShutter * 1.25
+                print(newShutter, "Shutter")
+            }
+            
+        }
+    }
+
     
     // MAR: Camera stuff
     func processPhoto() { // Save and move to next controller
@@ -238,6 +263,25 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             })
         }
     }
+    
+    
+    func ChangeShutterAndISOWithValues(value:Float, withISO ISO:Float) {
+        if let device = mainCaptureDevice {
+            do {
+                try device.lockForConfiguration()
+            } catch {
+                return
+            }
+            
+            // Save current Value for other controlls reuse
+            let correctShutter = CMTimeMake(Int64(value * 1000000000) , device.exposureDuration.timescale)
+            
+            // Change camera controll value
+            device.setExposureModeCustomWithDuration(correctShutter, ISO:ISO, completionHandler: { (CMTime) -> Void in
+                device.unlockForConfiguration()
+            })
+        }
+    }
 
     
     // MARK: Actions
@@ -265,23 +309,29 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     
     // MARK: Collection View Delegates
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int  {
-        return arrayISO.count
+        return collectionView.tag == 1 ? arrayShutter.count :arrayISO.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell  {
 
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CellShutter", forIndexPath: indexPath) as! ManualControllCollectionViewCell
-        let iso = arrayISO[indexPath.item]
-        cell.labelMain.text =  String(format: "%.0f",iso)
+        let text = collectionView.tag == 1 ? arrayShutter[indexPath.item] : arrayISO[indexPath.item]
+        cell.labelMain.text =  String(format: "%.0f",text)
         return cell
     }
     
-//    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-//        let object:DKAEffectObject = DKAEffectManager.sharedInstance.effectObjectsArray.objectAtIndex(indexPath.item) as! DKAEffectObject
-//        self.mainImageView.image = object.image
-//        self.image = object.image
-//    }
-
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        print("End Delecerating")
+        
+        let shutterIndexPath = findCenterIndexForCollectionView(self.collectionViewShutter)
+        let shutter = arrayShutter[shutterIndexPath.item]
+        
+        let isoIndexPath = findCenterIndexForCollectionView(self.collectionViewISO)
+        let iso = arrayISO[isoIndexPath.item]
+        
+        ChangeShutterAndISOWithValues(shutter, withISO: iso)
+    }
+    
     
     // MARK: Navigation
     func moveToImageViewControllerWithImage(image: UIImage) {
@@ -293,6 +343,26 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     
     // MARK : Helpers
     //TODO: Move to another class
+    private func findCenterIndexForCollectionView(collectionView:UICollectionView) -> NSIndexPath {
+        let collectionOrigin = collectionView.bounds.origin
+        let collectionWidth = collectionView.bounds.width
+        var centerPoint: CGPoint!
+        var newX: CGFloat!
+        if collectionOrigin.x > 0 {
+            newX = collectionOrigin.x + collectionWidth / 2
+            centerPoint = CGPoint(x: newX, y: collectionOrigin.y)
+        } else {
+            newX = collectionWidth / 2
+            centerPoint = CGPoint(x: newX, y: collectionOrigin.y)
+        }
+        
+        let index = collectionView.indexPathForItemAtPoint(centerPoint)
+        print(index)
+        
+        return index!
+    }
+
+    
     func resizeImage(image: UIImage, newWidth: CGFloat) -> UIImage {
         let scale = newWidth / image.size.width
         let newHeight = image.size.height * scale

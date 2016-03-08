@@ -104,45 +104,63 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     }
     
     func prepareISO() {
-        if let device = mainCaptureDevice {
-            do {
-                try device.lockForConfiguration()
-            } catch {
-                return
-            }
-            
-            let minISO = Float(ceil(device.activeFormat.minISO/10)*10)
-            let maxISO = Float(round(device.activeFormat.maxISO/1000)*1000)
-            
-            var newISO:Float = minISO
-            while (newISO <= maxISO) {
-                arrayISO.append(newISO)
-                newISO = newISO * 1.25
-                print(newISO)
-            }
-            
-        }
+        arrayISO.append(50)
+        arrayISO.append(100)
+        arrayISO.append(200)
+        arrayISO.append(400)
+        arrayISO.append(800)
+        arrayISO.append(1600)
+        arrayISO.append(2000)
+        
+        
+//        if let device = mainCaptureDevice {
+//            do {
+//                try device.lockForConfiguration()
+//            } catch {
+//                return
+//            }
+//            
+//            let minISO = Float(ceil(device.activeFormat.minISO/10)*10)
+//            let maxISO = Float(round(device.activeFormat.maxISO/1000)*1000)
+//            
+//            var newISO:Float = minISO
+//            while (newISO <= maxISO) {
+//                arrayISO.append(newISO)
+//                newISO = newISO * 1.25
+//                print(newISO)
+//            }
+//            
+//        }
     }
     
     func prepareShutter() {
-        if let device = mainCaptureDevice {
-            do {
-                try device.lockForConfiguration()
-            } catch {
-                return
-            }
-            
-            let minShutter = Float(CMTimeGetSeconds(device.activeFormat.minExposureDuration))
-            let maxShutter = Float(CMTimeGetSeconds(device.activeFormat.maxExposureDuration))
-            
-            var newShutter:Float = minShutter
-            while (newShutter <= maxShutter) {
-                arrayShutter.append(newShutter)
-                newShutter = newShutter * 1.25
-                print(newShutter, "Shutter")
-            }
-            
-        }
+        
+        arrayShutter.append(0.0008)
+        arrayShutter.append(0.001)
+        arrayShutter.append(0.005)
+        arrayShutter.append(0.01)
+        arrayShutter.append(0.05)
+        arrayShutter.append(0.1)
+        arrayShutter.append(0.2)
+        
+//        if let device = mainCaptureDevice {
+//            do {
+//                try device.lockForConfiguration()
+//            } catch {
+//                return
+//            }
+//            
+//            let minShutter = Float(CMTimeGetSeconds(device.activeFormat.minExposureDuration))
+//            let maxShutter = Float(CMTimeGetSeconds(device.activeFormat.maxExposureDuration))
+//            
+//            var newShutter:Float = minShutter
+//            while (newShutter <= maxShutter) {
+//                arrayShutter.append(newShutter)
+//                newShutter = newShutter * 1.25
+//                print(newShutter, "Shutter")
+//            }
+//            
+//        }
     }
 
     
@@ -316,7 +334,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
 
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CellShutter", forIndexPath: indexPath) as! ManualControllCollectionViewCell
         let text = collectionView.tag == 1 ? arrayShutter[indexPath.item] : arrayISO[indexPath.item]
-        cell.labelMain.text =  String(format: "%.0f",text)
+        cell.labelMain.text = collectionView.tag == 1 ?  String(format: "1/%.0fs",text * 100000) : String(format: "%.0f",text)
         return cell
     }
     

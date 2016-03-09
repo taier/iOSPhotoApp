@@ -34,10 +34,12 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     @IBOutlet var viewSlider: UISlider!
     @IBOutlet var labelCurrentValue: UILabel!
     @IBOutlet var labelInfo: UILabel!
-    @IBOutlet var viewControlls: UIView!
     
     @IBOutlet var collectionViewShutter: UICollectionView!
     @IBOutlet var collectionViewISO: UICollectionView!
+    
+    @IBOutlet var viewContainerManualControlls: UIView!
+    @IBOutlet var viewFocusControlls: UIView!
     
     //MARK: Live cycle
     override func viewDidLoad() {
@@ -66,6 +68,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     func updateValueLabelWithShutterValue(value:Float) {
         self.labelCurrentValue.text = String(format: "1/%.0fs",value)
     }
+    
     
     func lauchCamera() {
         
@@ -134,33 +137,18 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     }
     
     func prepareShutter() {
-        
-        arrayShutter.append(0.0008)
+        arrayShutter.append(0.00015)
+        arrayShutter.append(0.0002)
+        arrayShutter.append(0.0005)
         arrayShutter.append(0.001)
+        arrayShutter.append(0.002)
         arrayShutter.append(0.005)
         arrayShutter.append(0.01)
+        arrayShutter.append(0.02)
         arrayShutter.append(0.05)
         arrayShutter.append(0.1)
         arrayShutter.append(0.2)
-        
-//        if let device = mainCaptureDevice {
-//            do {
-//                try device.lockForConfiguration()
-//            } catch {
-//                return
-//            }
-//            
-//            let minShutter = Float(CMTimeGetSeconds(device.activeFormat.minExposureDuration))
-//            let maxShutter = Float(CMTimeGetSeconds(device.activeFormat.maxExposureDuration))
-//            
-//            var newShutter:Float = minShutter
-//            while (newShutter <= maxShutter) {
-//                arrayShutter.append(newShutter)
-//                newShutter = newShutter * 1.25
-//                print(newShutter, "Shutter")
-//            }
-//            
-//        }
+        arrayShutter.append(0.5)
     }
 
     
@@ -193,7 +181,6 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             // Update UI
             self.labelInfo.text = "ISO"
             updateValueLabelWithValue(device.ISO)
-            self.viewControlls.hidden = false;
             
             // Change currenct application state
             currentManualControllsMode = ManualControllsMode.IOS;
@@ -221,7 +208,6 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             // Update UI
             self.labelInfo.text = "Shutter"
             updateValueLabelWithShutterValue(1/self.viewSlider.value)
-            self.viewControlls.hidden = false;
 
             // Change currenct application state
             currentManualControllsMode = ManualControllsMode.Shutter;
@@ -300,29 +286,49 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             })
         }
     }
+    
+    func changeFocus(value:Float) {
+        if let device = mainCaptureDevice {
+            do {
+                try device.lockForConfiguration()
+            } catch {
+                return
+            }
+            
+            device.setFocusModeLockedWithLensPosition(value, completionHandler: { (time) -> Void in
+            })
+            
+            device.unlockForConfiguration()
+        }
+    }
 
     
     // MARK: Actions
-    
     @IBAction func buttonTakePhoto(sender: AnyObject) {
        processPhoto()
     }
     
-    @IBAction func buttonISO(sender: AnyObject) {
-        setupControllsFroISO()
+    
+    @IBAction func buttonFocus(sender: AnyObject) {
+        self.viewContainerManualControlls.hidden = true
+        self.viewFocusControlls.hidden = false
     }
-    @IBAction func buttonShutter(sender: AnyObject) {
-        setupControllsForShutter()
+    
+    @IBAction func buttonManualControlls(sender: AnyObject) {
+        self.viewContainerManualControlls.hidden = false
+        self.viewFocusControlls.hidden = true
     }
     
     @IBAction func sliderValueChange(sender: UISlider) {
         let value:Float = Float(sender.value);
         
-        if(currentManualControllsMode == ManualControllsMode.IOS) {
-           ChangeISOWithValue(value)
-        } else if (currentManualControllsMode == ManualControllsMode.Shutter) {
-            ChangeShutterWithValue(value)
-        }
+        changeFocus(value)
+        
+//        if(currentManualControllsMode == ManualControllsMode.IOS) {
+//           ChangeISOWithValue(value)
+//        } else if (currentManualControllsMode == ManualControllsMode.Shutter) {
+//            ChangeShutterWithValue(value)
+//        }
     }
     
     // MARK: Collection View Delegates
@@ -333,8 +339,11 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell  {
 
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CellShutter", forIndexPath: indexPath) as! ManualControllCollectionViewCell
-        let text = collectionView.tag == 1 ? arrayShutter[indexPath.item] : arrayISO[indexPath.item]
-        cell.labelMain.text = collectionView.tag == 1 ?  String(format: "1/%.0fs",text * 100000) : String(format: "%.0f",text)
+        
+        let posstion = indexPath.item
+        let text = collectionView.tag == 1 ? getSringForCurrentShutterPossition(posstion) : getSringForCurrentISOPossition(posstion)
+        cell.labelMain.text = text
+        
         return cell
     }
     
@@ -348,6 +357,14 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         let iso = arrayISO[isoIndexPath.item]
         
         ChangeShutterAndISOWithValues(shutter, withISO: iso)
+    }
+    
+    func getSringForCurrentShutterPossition(shutterPosition:Int) -> String {
+        return convertFloatShutterToString(arrayShutter[shutterPosition])
+    }
+    
+    func getSringForCurrentISOPossition(isoPossiton:Int) -> String {
+        return String(format: "%.0f",arrayISO[isoPossiton])
     }
     
     
@@ -391,6 +408,36 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         
         return newImage
     }
-
+    
+    func convertFloatShutterToString(value:Float) -> String {
+        var returnString = "";
+        if (value == 0.5) {
+            returnString = "1/2s"
+        } else if (value == 0.2) {
+            returnString = "1/5s"
+        } else if (value == 0.1) {
+            returnString = "1/10s"
+        } else if (value == 0.05) {
+            returnString = "1/20s"
+        } else if (value == 0.02) {
+            returnString = "1/50s"
+        } else if (value == 0.01) {
+            returnString = "1/100s"
+        } else if (value == 0.005) {
+            returnString = "1/200s"
+        } else if (value == 0.002) {
+            returnString = "1/500s"
+        } else if (value == 0.001) {
+            returnString = "1/1000s"
+        } else if (value == 0.0005) {
+            returnString = "1/2000s"
+        } else if (value == 0.0002) {
+            returnString = "1/5000s"
+        } else if (value == 0.00015) {
+            returnString = "1/8000s"
+        }
+        
+        return returnString
+    }
 }
 

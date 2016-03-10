@@ -65,7 +65,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     // MARK: SetupStuff
     func lauchCamera() {
         
-        if(!cameraRunning) {
+        if(cameraRunning) {
             return
         }
         

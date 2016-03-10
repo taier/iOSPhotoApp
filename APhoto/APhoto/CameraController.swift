@@ -28,6 +28,8 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     var currentISO = Float?()
     var arrayISO = [Float]()
     var arrayShutter = [Float]()
+    var cameraRunning = false
+    
     
     // MARK: Outlets
     @IBOutlet weak var viewCamera: UIView!
@@ -61,20 +63,11 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
 
     
     // MARK: SetupStuff
-    func updateValueLabelWithValue(value:Float) {
-        self.labelCurrentValue.text = String(format: "%.0f",value)
-    }
-    
-    func updateValueLabelWithShutterValue(value:Float) {
-        self.labelCurrentValue.text = String(format: "1/%.0fs",value)
-    }
-    
-    
     func lauchCamera() {
         
-//        if(captureSession.running) { // If already have active camera
-//            return;
-//        }
+        if(!cameraRunning) {
+            return
+        }
         
         // Preview
         if let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession) {
@@ -84,6 +77,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             let cameraPreview = UIView(frame: self.viewCamera.frame)
             cameraPreview.layer.addSublayer(previewLayer)
             view.addSubview(cameraPreview)
+            cameraRunning = true
         }
 
     }
@@ -114,26 +108,6 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         arrayISO.append(800)
         arrayISO.append(1600)
         arrayISO.append(2000)
-        
-        
-//        if let device = mainCaptureDevice {
-//            do {
-//                try device.lockForConfiguration()
-//            } catch {
-//                return
-//            }
-//            
-//            let minISO = Float(ceil(device.activeFormat.minISO/10)*10)
-//            let maxISO = Float(round(device.activeFormat.maxISO/1000)*1000)
-//            
-//            var newISO:Float = minISO
-//            while (newISO <= maxISO) {
-//                arrayISO.append(newISO)
-//                newISO = newISO * 1.25
-//                print(newISO)
-//            }
-//            
-//        }
     }
     
     func prepareShutter() {
@@ -164,59 +138,6 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     }
 
     
-    func setupControllsFroISO() {
-        // Check for available device
-        if let device = mainCaptureDevice {
-            do {
-                try device.lockForConfiguration()
-            } catch {
-                return
-            }
-            
-            // Set slider appearance
-            self.viewSlider.minimumValue = device.activeFormat.minISO
-            self.viewSlider.maximumValue = device.activeFormat.maxISO
-            self.viewSlider.value = device.ISO
-            
-            // Update UI
-            self.labelInfo.text = "ISO"
-            updateValueLabelWithValue(device.ISO)
-            
-            // Change currenct application state
-            currentManualControllsMode = ManualControllsMode.IOS;
-            
-            //TODO:Check if can remove
-            device.unlockForConfiguration()
-        }
-        
-    }
-    
-    func setupControllsForShutter() {
-        // Check for available device
-        if let device = mainCaptureDevice {
-            do {
-                try device.lockForConfiguration()
-            } catch {
-                return
-            }
-            
-            // Set Slider appearance
-            self.viewSlider.minimumValue = Float(CMTimeGetSeconds(device.activeFormat.minExposureDuration))
-            self.viewSlider.maximumValue = Float(CMTimeGetSeconds(device.activeFormat.maxExposureDuration))
-            self.viewSlider.value =  Float(CMTimeGetSeconds(device.exposureDuration))
-            
-            // Update UI
-            self.labelInfo.text = "Shutter"
-            updateValueLabelWithShutterValue(1/self.viewSlider.value)
-
-            // Change currenct application state
-            currentManualControllsMode = ManualControllsMode.Shutter;
-            
-            //TODO:Check if can remove
-            device.unlockForConfiguration()
-        }
-    }
-    
     func ChangeISOWithValue(value:Float) {
         // Check for available device
         if let device = mainCaptureDevice {
@@ -225,9 +146,6 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             } catch {
                 return
             }
-            
-            // Update UI
-            updateValueLabelWithValue(value)
             
             // Save current Value for other controlls reuse
             self.currentISO = value
@@ -252,7 +170,6 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             }
             
             // Update UI
-            updateValueLabelWithShutterValue(1/value)
             print(value)
             
             // Save current Value for other controlls reuse
@@ -323,12 +240,6 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         let value:Float = Float(sender.value);
         
         changeFocus(value)
-        
-//        if(currentManualControllsMode == ManualControllsMode.IOS) {
-//           ChangeISOWithValue(value)
-//        } else if (currentManualControllsMode == ManualControllsMode.Shutter) {
-//            ChangeShutterWithValue(value)
-//        }
     }
     
     // MARK: Collection View Delegates
@@ -350,17 +261,17 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         print("End Delecerating")
         
-        let shutterIndexPath = findCenterIndexForCollectionView(self.collectionViewShutter)
+        let shutterIndexPath = DKCameraHelper.findCenterIndexForCollectionView(self.collectionViewShutter)
         let shutter = arrayShutter[shutterIndexPath.item]
         
-        let isoIndexPath = findCenterIndexForCollectionView(self.collectionViewISO)
+        let isoIndexPath = DKCameraHelper.findCenterIndexForCollectionView(self.collectionViewISO)
         let iso = arrayISO[isoIndexPath.item]
         
         ChangeShutterAndISOWithValues(shutter, withISO: iso)
     }
     
     func getSringForCurrentShutterPossition(shutterPosition:Int) -> String {
-        return convertFloatShutterToString(arrayShutter[shutterPosition])
+        return DKCameraHelper.convertFloatShutterToString(arrayShutter[shutterPosition])
     }
     
     func getSringForCurrentISOPossition(isoPossiton:Int) -> String {
@@ -371,73 +282,9 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     // MARK: Navigation
     func moveToImageViewControllerWithImage(image: UIImage) {
         let controller:ImageViewController = storyboard?.instantiateViewControllerWithIdentifier("imageViewController") as! ImageViewController
-        controller.image = resizeImage(image, newWidth: 400)
+        controller.image = DKCameraHelper.resizeImage(image, newWidth: 400)
         self.presentViewController(controller, animated: false,completion:{ () -> Void in
         })
-    }
-    
-    // MARK : Helpers
-    //TODO: Move to another class
-    private func findCenterIndexForCollectionView(collectionView:UICollectionView) -> NSIndexPath {
-        let collectionOrigin = collectionView.bounds.origin
-        let collectionWidth = collectionView.bounds.width
-        var centerPoint: CGPoint!
-        var newX: CGFloat!
-        if collectionOrigin.x > 0 {
-            newX = collectionOrigin.x + collectionWidth / 2
-            centerPoint = CGPoint(x: newX, y: collectionOrigin.y)
-        } else {
-            newX = collectionWidth / 2
-            centerPoint = CGPoint(x: newX, y: collectionOrigin.y)
-        }
-        
-        let index = collectionView.indexPathForItemAtPoint(centerPoint)
-        print(index)
-        
-        return index!
-    }
-
-    
-    func resizeImage(image: UIImage, newWidth: CGFloat) -> UIImage {
-        let scale = newWidth / image.size.width
-        let newHeight = image.size.height * scale
-        UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight))
-        image.drawInRect(CGRectMake(0, 0, newWidth, newHeight))
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return newImage
-    }
-    
-    func convertFloatShutterToString(value:Float) -> String {
-        var returnString = "";
-        if (value == 0.5) {
-            returnString = "1/2s"
-        } else if (value == 0.2) {
-            returnString = "1/5s"
-        } else if (value == 0.1) {
-            returnString = "1/10s"
-        } else if (value == 0.05) {
-            returnString = "1/20s"
-        } else if (value == 0.02) {
-            returnString = "1/50s"
-        } else if (value == 0.01) {
-            returnString = "1/100s"
-        } else if (value == 0.005) {
-            returnString = "1/200s"
-        } else if (value == 0.002) {
-            returnString = "1/500s"
-        } else if (value == 0.001) {
-            returnString = "1/1000s"
-        } else if (value == 0.0005) {
-            returnString = "1/2000s"
-        } else if (value == 0.0002) {
-            returnString = "1/5000s"
-        } else if (value == 0.00015) {
-            returnString = "1/8000s"
-        }
-        
-        return returnString
     }
 }
 

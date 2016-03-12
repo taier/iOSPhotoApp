@@ -76,7 +76,12 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
             let cameraPreview = UIView(frame: self.viewCamera.frame)
             cameraPreview.layer.addSublayer(previewLayer)
-            view.addSubview(cameraPreview)
+            
+            // Tap Gesture
+            let tap = UITapGestureRecognizer(target: self, action : "handleTap:")
+            tap.numberOfTapsRequired = 1
+            cameraPreview.addGestureRecognizer(tap)
+            viewCamera.addSubview(cameraPreview)
             cameraRunning = true
         }
 
@@ -242,6 +247,40 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         changeFocus(value)
     }
     
+    // MARK: Touches
+    
+    func handleTap(sender: UITapGestureRecognizer) {
+        
+        if sender.state == .Ended {
+            //TODO: Move to helper class
+            let touchLocation: CGPoint = sender.locationInView(self.viewCamera)
+            let focus_x = touchLocation.x/self.viewCamera.frame.size.width;
+            let focus_y = touchLocation.y/self.viewCamera.frame.size.height;
+            let focusPoint = CGPointMake(focus_x,focus_y)
+            
+            if let device = mainCaptureDevice {
+                do {
+                    try device.lockForConfiguration()
+                } catch {
+                    return
+                }
+
+                device.focusPointOfInterest = focusPoint
+                device.focusMode = AVCaptureFocusMode.ContinuousAutoFocus
+                device.exposurePointOfInterest = focusPoint
+                device.exposureMode = AVCaptureExposureMode.ContinuousAutoExposure
+                
+                device.unlockForConfiguration()
+                print("Focus on point ",focus_x,focus_y)
+                
+                // Animate
+                highlightTouchOnPoint(touchLocation, inView: self.viewCamera)
+            }
+
+        }
+        
+    }
+    
     // MARK: Collection View Delegates
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int  {
         return collectionView.tag == 1 ? arrayShutter.count :arrayISO.count
@@ -284,6 +323,28 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         let controller:ImageViewController = storyboard?.instantiateViewControllerWithIdentifier("imageViewController") as! ImageViewController
         controller.image = DKCameraHelper.resizeImage(image, newWidth: 400)
         self.presentViewController(controller, animated: false,completion:{ () -> Void in
+        })
+    }
+    
+    // MARK: UI Updates
+    func highlightTouchOnPoint(point:CGPoint, inView view:UIView) {
+        
+        // Create
+        let imageView = UIImageView(image: UIImage(named: "Focus Point Indication"))
+        imageView.frame = CGRectMake(point.x - 40, point.y - 40, 80, 80)
+        imageView.alpha = 0;
+        view.addSubview(imageView)
+        view.bringSubviewToFront(imageView) // Just to be sure
+        
+        //Animate
+        UIView.animateWithDuration(0.2, delay:0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
+            imageView.alpha = 1;
+            }, completion: { (finished: Bool) -> Void in
+               UIView.animateWithDuration(0.2, delay:0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+                imageView.alpha = 0;
+                }, completion: { (finished: Bool) -> Void in
+                    imageView.removeFromSuperview()
+                })
         })
     }
 }

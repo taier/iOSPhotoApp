@@ -53,6 +53,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        setCurrentCameraControllsValuesForUI()
         lauchCamera() // For correct frame
     }
 
@@ -102,6 +103,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             if captureSession.canAddOutput(stillImageOutput) {
                 captureSession.addOutput(stillImageOutput)
             }
+            
         }
     }
     
@@ -139,6 +141,24 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
                 let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
                 self.moveToImageViewControllerWithImage(UIImage(data: imageData)!)
             }
+        }
+    }
+    
+    func setCurrentCameraControllsValuesForUI() {
+        if let device = mainCaptureDevice {
+            do {
+                try device.lockForConfiguration()
+            } catch {
+                return
+            }
+            
+            // ISO
+            let itemIndexPathForISO:NSIndexPath = DKCameraHelper.convertISOToCollectionViewPosition(device.ISO)
+            self.collectionViewISO.scrollToItemAtIndexPath(itemIndexPathForISO, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: false)
+            
+            //Shutter
+            let itemIndexPathForShutter = DKCameraHelper.convertShutterToCollectionViewPosition(Float(device.exposureDuration.seconds / 50))
+            self.collectionViewShutter.scrollToItemAtIndexPath(itemIndexPathForShutter, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: false)
         }
     }
 
@@ -248,7 +268,6 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     }
     
     // MARK: Touches
-    
     func handleTap(sender: UITapGestureRecognizer) {
         
         if sender.state == .Ended {

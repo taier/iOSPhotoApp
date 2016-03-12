@@ -32,7 +32,7 @@ class DKCameraHelper: NSObject {
     
     //MARK: Convertations
     class func convertFloatShutterToString(value:Float) -> String {
-        var returnString = "";
+        var returnString = ""
         if (value == 0.5) {
             returnString = "1/2s"
         } else if (value == 0.2) {
@@ -60,6 +60,59 @@ class DKCameraHelper: NSObject {
         }
         
         return returnString
+    }
+    
+    class func convertShutterToCollectionViewPosition(valueShutter:Float) -> NSIndexPath {
+        
+        var itemPosition = 0
+        if (valueShutter <= 0.00015) {
+            itemPosition = 10
+        } else if (valueShutter <= 0.0002) {
+            itemPosition = 9
+        } else if (valueShutter <= 0.0005) {
+            itemPosition = 8
+        } else if (valueShutter <= 0.001) {
+            itemPosition = 7
+        } else if (valueShutter <= 0.002) {
+            itemPosition = 6
+        } else if (valueShutter <= 0.005) {
+            itemPosition = 5
+        } else if (valueShutter <= 0.01) {
+            itemPosition = 4
+        } else if (valueShutter <= 0.02) {
+            itemPosition = 3
+        } else if (valueShutter <= 0.05) {
+            itemPosition = 2
+        } else if (valueShutter <= 0.1) {
+            itemPosition = 1
+        } else if (valueShutter <= 0.5) {
+            itemPosition = 0
+        }
+        
+        return NSIndexPath(forItem: itemPosition, inSection: 0)
+    }
+    
+    class func convertISOToCollectionViewPosition(valueISO:Float) -> NSIndexPath {
+        
+        var itemPosition = 0
+        
+        if(valueISO <= 50) {
+            itemPosition = 0
+        } else if (valueISO <= 100) {
+            itemPosition = 1
+        } else if (valueISO <= 200) {
+            itemPosition = 2
+        } else if (valueISO <= 400) {
+            itemPosition = 3
+        } else if (valueISO <= 800) {
+            itemPosition = 4
+        } else if (valueISO <= 1600) {
+            itemPosition = 5
+        } else if (valueISO <= 2000) {
+            itemPosition = 6
+        }
+        
+        return NSIndexPath(forItem: itemPosition, inSection: 0)
     }
     
     //MARK: Other

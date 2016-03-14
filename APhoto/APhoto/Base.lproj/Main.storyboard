@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <scenes>
         <!--Camera Controller-->
@@ -279,15 +279,19 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Ok-uQ-grY" userLabel="Auto iSO">
-                                        <rect key="frame" x="288" y="31" width="24" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Ok-uQ-grY" userLabel="Auto iSO">
+                                        <rect key="frame" x="277" y="0.0" width="35" height="61"/>
+                                        <color key="backgroundColor" red="0.0" green="0.20000000000000001" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="24" id="0za-If-z1k"/>
-                                            <constraint firstAttribute="height" constant="30" id="SCM-ZL-xIV"/>
+                                            <constraint firstAttribute="width" constant="35" id="0za-If-z1k"/>
+                                            <constraint firstAttribute="height" constant="61" id="SCM-ZL-xIV"/>
                                         </constraints>
                                         <state key="normal" title="A">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="buttonAutoISO:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5Kr-4S-VUa"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -303,7 +307,7 @@
                                     <constraint firstItem="uFc-sG-XHa" firstAttribute="leading" secondItem="yPp-uz-pSu" secondAttribute="trailing" constant="8" id="YDl-su-y0B"/>
                                     <constraint firstAttribute="bottom" secondItem="yPp-uz-pSu" secondAttribute="bottom" constant="6" id="bTR-ow-ITq"/>
                                     <constraint firstItem="sbn-3J-mpT" firstAttribute="top" secondItem="GUX-R8-ayu" secondAttribute="bottom" constant="3" id="bsv-14-z83"/>
-                                    <constraint firstItem="4Ok-uQ-grY" firstAttribute="leading" secondItem="sbn-3J-mpT" secondAttribute="trailing" constant="13" id="h4y-c1-Ndm"/>
+                                    <constraint firstItem="4Ok-uQ-grY" firstAttribute="leading" secondItem="sbn-3J-mpT" secondAttribute="trailing" constant="2" id="h4y-c1-Ndm"/>
                                     <constraint firstItem="TDM-nN-UXl" firstAttribute="top" secondItem="Dgu-Dl-0uW" secondAttribute="top" id="jcm-16-AHj"/>
                                     <constraint firstAttribute="bottom" secondItem="uFc-sG-XHa" secondAttribute="bottom" id="kUP-vg-Ht2"/>
                                     <constraint firstAttribute="height" constant="72" id="lns-eX-3AK"/>

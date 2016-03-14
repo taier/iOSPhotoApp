@@ -161,6 +161,25 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             self.collectionViewShutter.scrollToItemAtIndexPath(itemIndexPathForShutter, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: false)
         }
     }
+    
+    func setAutoISO() {
+        if let device = mainCaptureDevice {
+            do {
+                try device.lockForConfiguration()
+            } catch {
+                return
+            }
+            
+            device.exposureMode = AVCaptureExposureMode.ContinuousAutoExposure
+            device.unlockForConfiguration()
+            
+            let dispatchTime: dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC)))
+            dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+                self.setCurrentCameraControllsValuesForUI()
+            })
+            
+        }
+    }
 
     
     func ChangeISOWithValue(value:Float) {
@@ -265,6 +284,9 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         let value:Float = Float(sender.value);
         
         changeFocus(value)
+    }
+    @IBAction func buttonAutoISO(sender: AnyObject) {
+        setAutoISO()
     }
     
     // MARK: Touches

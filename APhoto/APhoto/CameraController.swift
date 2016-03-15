@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation 
 
-class CameraController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource  {
+class CameraController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, AVCaptureVideoDataOutputSampleBufferDelegate  {
 
     // MARK: Enums
     enum ManualControllsMode {
@@ -20,6 +20,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     // MARK: Variables
     let captureSession = AVCaptureSession()
     let stillImageOutput = AVCaptureStillImageOutput()
+    var videoImageOutput = AVCaptureVideoDataOutput()
     var mainCaptureDevice = AVCaptureDevice?()
     var currentManualControllsMode = ManualControllsMode?()
     
@@ -36,6 +37,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     @IBOutlet var viewSlider: UISlider!
     @IBOutlet var labelCurrentValue: UILabel!
     @IBOutlet var labelInfo: UILabel!
+    @IBOutlet var buttonAutoISO: UIButton!
     
     @IBOutlet var collectionViewShutter: UICollectionView!
     @IBOutlet var collectionViewISO: UICollectionView!
@@ -86,6 +88,32 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             cameraRunning = true
         }
 
+    }
+    
+    func changeCameraModeForLongExposure() {
+        if let device = mainCaptureDevice {
+        
+            captureSession.stopRunning()
+            captureSession.beginConfiguration()
+            captureSession.sessionPreset = AVCaptureSessionPresetLow
+            
+            videoImageOutput = AVCaptureVideoDataOutput();
+            
+            var outputQueue : dispatch_queue_t?
+            outputQueue = dispatch_queue_create("outputQueue", DISPATCH_QUEUE_SERIAL);
+            videoImageOutput.setSampleBufferDelegate(self, queue: outputQueue)
+            videoImageOutput.alwaysDiscardsLateVideoFrames = true;
+//            videoImageOutput.videoSettings = nil;
+            
+            if captureSession.canAddOutput(videoImageOutput) {
+                captureSession.addOutput(videoImageOutput)
+            }
+            
+            captureSession.commitConfiguration()
+            captureSession.startRunning()
+
+            
+        }
     }
     
     func prepareCamera() {
@@ -180,6 +208,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             
         }
     }
+    
 
     
     func ChangeISOWithValue(value:Float) {
@@ -287,6 +316,11 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     }
     @IBAction func buttonAutoISO(sender: AnyObject) {
         setAutoISO()
+        toggleAutoButtonON(true)
+    }
+    
+    @IBAction func buttonLongExposure(sender: AnyObject) {
+        changeCameraModeForLongExposure()
     }
     
     // MARK: Touches
@@ -322,6 +356,39 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         
     }
     
+    // MARK: Camera Delegate
+    
+    func captureOutput(captureOutput: AVCaptureOutput!, didDropSampleBuffer sampleBuffer: CMSampleBuffer!, fromConnection connection: AVCaptureConnection!) {
+        
+        print("frame dropped")
+    }
+    
+    func captureOutput(captureOutput: AVCaptureOutput, didOutputSampleBuffer sampleBuffer: CMSampleBufferRef, fromConnection connection: AVCaptureConnection) {
+        
+        print("frame received")
+        let imagen:UIImage=imageFromSampleBuffer(sampleBuffer)
+    }
+    
+    func imageFromSampleBuffer(sampleBuffer :CMSampleBufferRef) -> UIImage {
+        let imageBuffer: CVImageBufferRef = CMSampleBufferGetImageBuffer(sampleBuffer)!
+        CVPixelBufferLockBaseAddress(imageBuffer, 0)
+        let baseAddress: UnsafeMutablePointer<Void> = CVPixelBufferGetBaseAddressOfPlane(imageBuffer, Int(0))
+        
+        let bytesPerRow: Int = CVPixelBufferGetBytesPerRow(imageBuffer)
+        let width: Int = CVPixelBufferGetWidth(imageBuffer)
+        let height: Int = CVPixelBufferGetHeight(imageBuffer)
+        
+        let colorSpace: CGColorSpaceRef = CGColorSpaceCreateDeviceRGB()!
+        
+        let bitsPerCompornent: Int = 8
+        let bitmapInfo = CGBitmapInfo(rawValue: (CGBitmapInfo.ByteOrder32Little.rawValue | CGImageAlphaInfo.PremultipliedFirst.rawValue) as UInt32)
+        let newContext: CGContextRef = CGBitmapContextCreate(baseAddress, width, height, bitsPerCompornent, bytesPerRow, colorSpace, bitmapInfo.rawValue)! as CGContextRef
+        
+        let imageRef: CGImageRef = CGBitmapContextCreateImage(newContext)!
+        let resultImage = UIImage(CGImage: imageRef, scale: 1.0, orientation: UIImageOrientation.Right)
+        return resultImage
+    }
+    
     // MARK: Collection View Delegates
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int  {
         return collectionView.tag == 1 ? arrayShutter.count :arrayISO.count
@@ -346,6 +413,8 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         
         let isoIndexPath = DKCameraHelper.findCenterIndexForCollectionView(self.collectionViewISO)
         let iso = arrayISO[isoIndexPath.item]
+        
+        toggleAutoButtonON(false) // Off auto Mode
         
         ChangeShutterAndISOWithValues(shutter, withISO: iso)
     }
@@ -387,6 +456,10 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
                     imageView.removeFromSuperview()
                 })
         })
+    }
+    
+    func toggleAutoButtonON(on:Bool) {
+        self.buttonAutoISO.backgroundColor = on ? UIColor.greenColor() : UIColor.blueColor()
     }
 }
 

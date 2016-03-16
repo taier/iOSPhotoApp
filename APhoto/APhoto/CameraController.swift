@@ -95,7 +95,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         
             captureSession.stopRunning()
             captureSession.beginConfiguration()
-            captureSession.sessionPreset = AVCaptureSessionPresetLow
+            captureSession.sessionPreset = AVCaptureSessionPresetMedium
             
             videoImageOutput = AVCaptureVideoDataOutput();
             
@@ -103,7 +103,6 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             outputQueue = dispatch_queue_create("outputQueue", DISPATCH_QUEUE_SERIAL);
             videoImageOutput.setSampleBufferDelegate(self, queue: outputQueue)
             videoImageOutput.alwaysDiscardsLateVideoFrames = true;
-//            videoImageOutput.videoSettings = nil;
             
             if captureSession.canAddOutput(videoImageOutput) {
                 captureSession.addOutput(videoImageOutput)
@@ -366,7 +365,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     func captureOutput(captureOutput: AVCaptureOutput, didOutputSampleBuffer sampleBuffer: CMSampleBufferRef, fromConnection connection: AVCaptureConnection) {
         
         print("frame received")
-        let imagen:UIImage=imageFromSampleBuffer(sampleBuffer)
+        let imagen:UIImage = imageFromSampleBuffer(sampleBuffer)
     }
     
     func imageFromSampleBuffer(sampleBuffer :CMSampleBufferRef) -> UIImage {
@@ -379,10 +378,10 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         let height: Int = CVPixelBufferGetHeight(imageBuffer)
         
         let colorSpace: CGColorSpaceRef = CGColorSpaceCreateDeviceRGB()!
-        
+    
         let bitsPerCompornent: Int = 8
         let bitmapInfo = CGBitmapInfo(rawValue: (CGBitmapInfo.ByteOrder32Little.rawValue | CGImageAlphaInfo.PremultipliedFirst.rawValue) as UInt32)
-        let newContext: CGContextRef = CGBitmapContextCreate(baseAddress, width, height, bitsPerCompornent, bytesPerRow, colorSpace, bitmapInfo.rawValue)! as CGContextRef
+        let newContext: CGContextRef = CGBitmapContextCreate(nil, width, height, bitsPerCompornent, bytesPerRow, colorSpace,  CGImageAlphaInfo.PremultipliedLast.rawValue)! as CGContextRef
         
         let imageRef: CGImageRef = CGBitmapContextCreateImage(newContext)!
         let resultImage = UIImage(CGImage: imageRef, scale: 1.0, orientation: UIImageOrientation.Right)

@@ -38,6 +38,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     @IBOutlet var labelCurrentValue: UILabel!
     @IBOutlet var labelInfo: UILabel!
     @IBOutlet var buttonAutoISO: UIButton!
+    @IBOutlet var imageViewPreviewLongExposure: UIImageView!
     
     @IBOutlet var collectionViewShutter: UICollectionView!
     @IBOutlet var collectionViewISO: UICollectionView!
@@ -364,29 +365,31 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     
     func captureOutput(captureOutput: AVCaptureOutput, didOutputSampleBuffer sampleBuffer: CMSampleBufferRef, fromConnection connection: AVCaptureConnection) {
         
+        let image:UIImage = imageFromSampleBuffer(sampleBuffer)!
+        self.imageViewPreviewLongExposure.image = image;
         print("frame received")
-        let imagen:UIImage = imageFromSampleBuffer(sampleBuffer)
     }
     
-    func imageFromSampleBuffer(sampleBuffer :CMSampleBufferRef) -> UIImage {
-        let imageBuffer: CVImageBufferRef = CMSampleBufferGetImageBuffer(sampleBuffer)!
-        CVPixelBufferLockBaseAddress(imageBuffer, 0)
-        let baseAddress: UnsafeMutablePointer<Void> = CVPixelBufferGetBaseAddressOfPlane(imageBuffer, Int(0))
-        
-        let bytesPerRow: Int = CVPixelBufferGetBytesPerRow(imageBuffer)
-        let width: Int = CVPixelBufferGetWidth(imageBuffer)
-        let height: Int = CVPixelBufferGetHeight(imageBuffer)
-        
-        let colorSpace: CGColorSpaceRef = CGColorSpaceCreateDeviceRGB()!
-    
-        let bitsPerCompornent: Int = 8
-        let bitmapInfo = CGBitmapInfo(rawValue: (CGBitmapInfo.ByteOrder32Little.rawValue | CGImageAlphaInfo.PremultipliedFirst.rawValue) as UInt32)
-        let newContext: CGContextRef = CGBitmapContextCreate(nil, width, height, bitsPerCompornent, bytesPerRow, colorSpace,  CGImageAlphaInfo.PremultipliedLast.rawValue)! as CGContextRef
-        
-        let imageRef: CGImageRef = CGBitmapContextCreateImage(newContext)!
-        let resultImage = UIImage(CGImage: imageRef, scale: 1.0, orientation: UIImageOrientation.Right)
-        return resultImage
+    func imageFromSampleBuffer(sampleBuffer:CMSampleBufferRef) -> UIImage? {
+        if let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) {
+            CVPixelBufferLockBaseAddress(imageBuffer,0)
+            let baseAddress = CVPixelBufferGetBaseAddress(imageBuffer)
+            let width = CVPixelBufferGetWidth(imageBuffer)
+            let height = CVPixelBufferGetHeight(imageBuffer)
+            let colorSpace = CGColorSpaceCreateDeviceRGB()
+            let context = CGBitmapContextCreate(baseAddress,width,height,8, 1920, colorSpace, CGBitmapInfo.ByteOrder32Little.rawValue | CGImageAlphaInfo.PremultipliedFirst.rawValue)
+            
+            let quartzImage = CGBitmapContextCreateImage(context)
+            CVPixelBufferUnlockBaseAddress(imageBuffer,0)
+            
+            if let quartzImage = quartzImage {
+                let image = UIImage(CGImage: quartzImage)
+                return image
+            }
+        }
+        return nil
     }
+
     
     // MARK: Collection View Delegates
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int  {

@@ -377,12 +377,17 @@
                                     <action selector="buttonLongExposure:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3R5-ku-3kg"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7NV-8H-GIf" userLabel="Preview">
+                                <rect key="frame" x="199" y="419" width="63" height="55"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Xsi-s3-XeV" secondAttribute="bottom" constant="14" id="14R-U4-E1C"/>
                             <constraint firstItem="mLZ-kb-FSf" firstAttribute="top" secondItem="UmJ-Ye-fZy" secondAttribute="bottom" id="2Hd-dL-LZI"/>
                             <constraint firstItem="tqL-3S-g2s" firstAttribute="top" secondItem="Dgu-Dl-0uW" secondAttribute="bottom" constant="14" id="4Mc-Gb-fu1"/>
+                            <constraint firstItem="7NV-8H-GIf" firstAttribute="top" secondItem="Dgu-Dl-0uW" secondAttribute="bottom" constant="7" id="4YA-rD-im3"/>
                             <constraint firstItem="mLZ-kb-FSf" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="4qE-Im-qwc"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ipr-9E-Q5Z" secondAttribute="bottom" constant="5" id="63I-as-K1i"/>
                             <constraint firstItem="Xsi-s3-XeV" firstAttribute="top" secondItem="mLZ-kb-FSf" secondAttribute="bottom" constant="340" id="69R-dQ-4VQ"/>
@@ -411,6 +416,8 @@
                             <constraint firstItem="Xsi-s3-XeV" firstAttribute="leading" secondItem="tqL-3S-g2s" secondAttribute="trailing" constant="19" id="lDU-aJ-Mb4"/>
                             <constraint firstItem="ipr-9E-Q5Z" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="mIa-Ay-QWg"/>
                             <constraint firstItem="Xsi-s3-XeV" firstAttribute="top" secondItem="Dgu-Dl-0uW" secondAttribute="bottom" constant="14" id="mPD-yN-kz6"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="7NV-8H-GIf" secondAttribute="bottom" constant="6" id="n5h-c2-Ric"/>
+                            <constraint firstItem="7NV-8H-GIf" firstAttribute="leading" secondItem="ipr-9E-Q5Z" secondAttribute="trailing" constant="10" id="nKF-PX-daT"/>
                             <constraint firstItem="tqL-3S-g2s" firstAttribute="top" secondItem="mLZ-kb-FSf" secondAttribute="bottom" constant="14" id="p97-dh-eW0"/>
                             <constraint firstItem="Dgu-Dl-0uW" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="pQI-iV-4WU"/>
                             <constraint firstAttribute="trailing" secondItem="I4t-mL-n5F" secondAttribute="trailing" constant="5" id="r4b-2c-hSX"/>
@@ -418,6 +425,7 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="tqL-3S-g2s" secondAttribute="bottom" constant="14" id="vob-nS-xzW"/>
                             <constraint firstItem="Dgu-Dl-0uW" firstAttribute="top" secondItem="UmJ-Ye-fZy" secondAttribute="bottom" id="xHS-i7-I2g"/>
                             <constraint firstAttribute="trailing" secondItem="UmJ-Ye-fZy" secondAttribute="trailing" id="yP8-Ky-9Vd"/>
+                            <constraint firstItem="I4t-mL-n5F" firstAttribute="leading" secondItem="7NV-8H-GIf" secondAttribute="trailing" constant="13" id="zY9-8t-88y"/>
                             <constraint firstAttribute="trailing" secondItem="mLZ-kb-FSf" secondAttribute="trailing" id="zt0-te-lpN"/>
                         </constraints>
                         <variation key="default">
@@ -448,6 +456,7 @@
                         <outlet property="buttonAutoISO" destination="4Ok-uQ-grY" id="WS1-oz-O02"/>
                         <outlet property="collectionViewISO" destination="sbn-3J-mpT" id="nwf-P6-R9k"/>
                         <outlet property="collectionViewShutter" destination="yPp-uz-pSu" id="uO8-La-D2x"/>
+                        <outlet property="imageViewPreviewLongExposure" destination="7NV-8H-GIf" id="aUB-GS-A0p"/>
                         <outlet property="labelInfo" destination="j8y-lr-xQN" id="U6b-0J-XhI"/>
                         <outlet property="viewCamera" destination="UmJ-Ye-fZy" id="iFG-fK-Uaz"/>
                         <outlet property="viewContainerManualControlls" destination="Dgu-Dl-0uW" id="SKx-Yc-9Ad"/>

@@ -367,7 +367,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         
         let image:UIImage = imageFromSampleBuffer(sampleBuffer)!
         self.imageViewPreviewLongExposure.image = image;
-        print("frame received")
+        print("frame received") 
     }
     
     func imageFromSampleBuffer(sampleBuffer:CMSampleBufferRef) -> UIImage? {

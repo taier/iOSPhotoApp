@@ -51,7 +51,7 @@ class ImageViewController: UIViewController, UICollectionViewDataSource {
         if error == nil {
            notificatonSaveSuccess()
         } else {
-          notificationSaveError(error!)
+          notificationSaveError(error!) 
         }
     }
     

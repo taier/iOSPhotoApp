@@ -51,13 +51,13 @@ class ImageViewController: UIViewController, UICollectionViewDataSource {
         if error == nil {
            notificatonSaveSuccess()
         } else {
-          notificationSaveError(error!) 
+          notificationSaveError(error!)
         }
     }
     
     // MARK: Collection View Delegates
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int  {
-        return DKAEffectManager.sharedInstance.createEffectsItemsAndGetCount(self.image)
+        return DKAEffectManager.sharedInstance.createEffectsItemsAndGetCount(self.image) 
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell  {

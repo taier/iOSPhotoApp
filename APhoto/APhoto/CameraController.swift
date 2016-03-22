@@ -31,6 +31,9 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     var arrayShutter = [Float]()
     var cameraRunning = false
     
+    // Data 
+    var arrayOfImagesForLongExposure = NSMutableArray()
+    
     
     // MARK: Outlets
     @IBOutlet weak var viewCamera: UIView!
@@ -99,11 +102,23 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             captureSession.sessionPreset = AVCaptureSessionPresetMedium
             
             videoImageOutput = AVCaptureVideoDataOutput();
+            videoImageOutput.videoSettings = [ kCVPixelBufferPixelFormatTypeKey: Int(kCVPixelFormatType_32BGRA) ]
+
             
             var outputQueue : dispatch_queue_t?
             outputQueue = dispatch_queue_create("outputQueue", DISPATCH_QUEUE_SERIAL);
             videoImageOutput.setSampleBufferDelegate(self, queue: outputQueue)
             videoImageOutput.alwaysDiscardsLateVideoFrames = true;
+            
+            do {
+                try device.lockForConfiguration()
+            } catch {
+                return
+            }
+            
+            device.activeVideoMinFrameDuration = CMTimeMake(1, 15)
+            
+            device.unlockForConfiguration()
             
             if captureSession.canAddOutput(videoImageOutput) {
                 captureSession.addOutput(videoImageOutput)
@@ -111,8 +126,8 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             
             captureSession.commitConfiguration()
             captureSession.startRunning()
-
             
+            self.viewCamera.bringSubviewToFront(self.imageViewPreviewLongExposure)
         }
     }
     
@@ -123,6 +138,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             // Quality
             captureSession.sessionPreset = AVCaptureSessionPresetPhoto
             stillImageOutput.outputSettings = [AVVideoCodecKey:AVVideoCodecJPEG]
+            
             
             // Streaming session
             mainCaptureDevice = captureDevice
@@ -364,31 +380,77 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     }
     
     func captureOutput(captureOutput: AVCaptureOutput, didOutputSampleBuffer sampleBuffer: CMSampleBufferRef, fromConnection connection: AVCaptureConnection) {
+
+        dispatch_sync(dispatch_get_main_queue(), {
+            let image:UIImage = self.imageFromSampleBuffer(sampleBuffer)!
+            // Add to data
+            self.arrayOfImagesForLongExposure.addObject(image)
+            // Preview
+            self.imageViewPreviewLongExposure.image = self.createLongExposure(self.arrayOfImagesForLongExposure)
+        })
         
-        let image:UIImage = imageFromSampleBuffer(sampleBuffer)!
-        self.imageViewPreviewLongExposure.image = image;
-        print("frame received") 
+        print("frame received")
     }
     
     func imageFromSampleBuffer(sampleBuffer:CMSampleBufferRef) -> UIImage? {
-        if let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) {
-            CVPixelBufferLockBaseAddress(imageBuffer,0)
-            let baseAddress = CVPixelBufferGetBaseAddress(imageBuffer)
-            let width = CVPixelBufferGetWidth(imageBuffer)
-            let height = CVPixelBufferGetHeight(imageBuffer)
-            let colorSpace = CGColorSpaceCreateDeviceRGB()
-            let context = CGBitmapContextCreate(baseAddress,width,height,8, 1920, colorSpace, CGBitmapInfo.ByteOrder32Little.rawValue | CGImageAlphaInfo.PremultipliedFirst.rawValue)
-            
-            let quartzImage = CGBitmapContextCreateImage(context)
-            CVPixelBufferUnlockBaseAddress(imageBuffer,0)
-            
-            if let quartzImage = quartzImage {
-                let image = UIImage(CGImage: quartzImage)
-                return image
-            }
-        }
-        return nil
+        let imageBuffer: CVImageBufferRef! = CMSampleBufferGetImageBuffer(sampleBuffer)
+        
+        CVPixelBufferLockBaseAddress(imageBuffer, 0)
+        let baseAddress: UnsafeMutablePointer<Void> = CVPixelBufferGetBaseAddressOfPlane(imageBuffer, 0)
+        
+        let bytesPerRow: Int = CVPixelBufferGetBytesPerRow(imageBuffer)
+        let width: Int = CVPixelBufferGetWidth(imageBuffer)
+        let height: Int = CVPixelBufferGetHeight(imageBuffer)
+        let colorSpace: CGColorSpaceRef! = CGColorSpaceCreateDeviceRGB()
+        let bitsPerCompornent: Int = 8
+        let bitmapInfo = CGBitmapInfo(rawValue: (CGBitmapInfo.ByteOrder32Little.rawValue | CGImageAlphaInfo.PremultipliedFirst.rawValue) as UInt32)
+        let newContext: CGContextRef! = CGBitmapContextCreate(baseAddress, width, height, bitsPerCompornent, bytesPerRow, colorSpace, bitmapInfo.rawValue) as CGContextRef!
+        let imageRef: CGImageRef! = CGBitmapContextCreateImage(newContext!)
+        CVPixelBufferUnlockBaseAddress(imageBuffer, 0)
+        let resultImage: UIImage = UIImage(CGImage: imageRef)
+        return resultImage
     }
+    
+    func createLongExposure(images:NSMutableArray) -> UIImage? {
+        
+        let firstImg = images[0]
+        let imgSize = firstImg.size
+        let alpha:CGFloat = CGFloat(1.0 / Double(images.count))
+        
+        UIGraphicsBeginImageContext(imgSize);
+        let context:CGContextRef = UIGraphicsGetCurrentContext()!;
+        CGContextSetFillColorWithColor(context, UIColor.blackColor().CGColor);
+        CGContextFillRect(context, CGRectMake(0, 0, imgSize.width, imgSize.height));
+        
+        for image in images {
+            let rect = CGRect(x:0, y:0, width: imgSize.width, height:imgSize.height)
+            image.drawInRect(rect, blendMode: .PlusLighter, alpha: alpha)
+        }
+        
+        let longExpImg = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        return longExpImg
+    }
+    
+//    - (UIImage *) createLongExposure:(NSArray *)images {
+//    UIImage *firstImg = images[0];
+//    CGSize imgSize = firstImg.size;
+//    CGFloat alpha = 1.0 / images.count;
+//    
+//    UIGraphicsBeginImageContext(imgSize);
+//    CGContextRef context = UIGraphicsGetCurrentContext();
+//    CGContextSetFillColorWithColor(context, [[UIColor blackColor] CGColor]);
+//    CGContextFillRect(context, CGRectMake(0, 0, imgSize.width, imgSize.height));
+//    
+//    for (UIImage *image in images) {
+//    [image drawInRect:CGRectMake(0, 0, imgSize.width, imgSize.height)
+//    blendMode:kCGBlendModePlusLighter alpha:alpha];
+//    }
+//    UIImage *longExpImg = UIGraphicsGetImageFromCurrentImageContext();
+//    UIGraphicsEndImageContext();
+//    return longExpImg;
+//    }
 
     
     // MARK: Collection View Delegates

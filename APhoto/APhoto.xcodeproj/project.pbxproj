@@ -17,6 +17,7 @@
 		97C14A0D1C8DF0E7001E14AC /* ManualControllCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C14A0C1C8DF0E7001E14AC /* ManualControllCollectionViewCell.swift */; };
 		97F26DC71C875DCC00D3F5CA /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F26DC61C875DCC00D3F5CA /* ImageViewController.swift */; };
 		97F26DC91C8763B300D3F5CA /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F26DC81C8763B300D3F5CA /* ImageCollectionViewCell.swift */; };
+		97F555A01CA2FDB80039AF94 /* ImageRotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F5559F1CA2FDB80039AF94 /* ImageRotation.swift */; };
 		B703A6971C878CCC0025B3A0 /* DKAEffectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B703A6961C878CCC0025B3A0 /* DKAEffectManager.swift */; };
 		B703A69A1C878CEC0025B3A0 /* DKAEffectObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B703A6991C878CEC0025B3A0 /* DKAEffectObject.swift */; };
 		B7D646051C913F940003DAD5 /* DKCameraHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D646041C913F940003DAD5 /* DKCameraHelper.swift */; };
@@ -56,6 +57,7 @@
 		97C14A0C1C8DF0E7001E14AC /* ManualControllCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManualControllCollectionViewCell.swift; sourceTree = "<group>"; };
 		97F26DC61C875DCC00D3F5CA /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		97F26DC81C8763B300D3F5CA /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		97F5559F1CA2FDB80039AF94 /* ImageRotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageRotation.swift; sourceTree = "<group>"; };
 		B703A6961C878CCC0025B3A0 /* DKAEffectManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKAEffectManager.swift; sourceTree = "<group>"; };
 		B703A6991C878CEC0025B3A0 /* DKAEffectObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKAEffectObject.swift; sourceTree = "<group>"; };
 		B7D646041C913F940003DAD5 /* DKCameraHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKCameraHelper.swift; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 			children = (
 				B7D646041C913F940003DAD5 /* DKCameraHelper.swift */,
 				9776DDB61C860171001A141F /* CameraController.swift */,
+				97F5559F1CA2FDB80039AF94 /* ImageRotation.swift */,
 				97C14A0C1C8DF0E7001E14AC /* ManualControllCollectionViewCell.swift */,
 			);
 			name = CameraView;
@@ -330,6 +333,7 @@
 				97C14A0D1C8DF0E7001E14AC /* ManualControllCollectionViewCell.swift in Sources */,
 				B703A6971C878CCC0025B3A0 /* DKAEffectManager.swift in Sources */,
 				9776DDB51C860171001A141F /* AppDelegate.swift in Sources */,
+				97F555A01CA2FDB80039AF94 /* ImageRotation.swift in Sources */,
 				B7D646051C913F940003DAD5 /* DKCameraHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

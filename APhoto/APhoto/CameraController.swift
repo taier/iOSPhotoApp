@@ -116,7 +116,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
                 return
             }
             
-            device.activeVideoMinFrameDuration = CMTimeMake(1, 15)
+            device.activeVideoMinFrameDuration = CMTimeMake(1, 50)
             
             device.unlockForConfiguration()
             
@@ -382,7 +382,8 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     func captureOutput(captureOutput: AVCaptureOutput, didOutputSampleBuffer sampleBuffer: CMSampleBufferRef, fromConnection connection: AVCaptureConnection) {
 
         dispatch_sync(dispatch_get_main_queue(), {
-            let image:UIImage = self.imageFromSampleBuffer(sampleBuffer)!
+            var image:UIImage = self.imageFromSampleBuffer(sampleBuffer)!
+            image = image.imageRotatedByDegrees(90, flip: false)
             // Add to data
             self.arrayOfImagesForLongExposure.addObject(image)
             // Preview

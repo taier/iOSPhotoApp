@@ -111,7 +111,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             videoImageOutput.alwaysDiscardsLateVideoFrames = true;
             
             do {
-                try device.lockForConfiguration()
+                try device.lockForConfiguration()  
             } catch {
                 return
             }

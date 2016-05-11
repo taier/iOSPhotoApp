@@ -10,7 +10,7 @@ import UIKit
 
 class DKCameraHelper: NSObject {
 
-    // MARK: Init
+    // MARK: Init Singleton
     class var sharedInstance: DKCameraHelper {
         struct Static {
             static let instance = DKCameraHelper()
@@ -18,19 +18,30 @@ class DKCameraHelper: NSObject {
         return Static.instance
     }
     
-    //MARK: Image
+    //MARK: Image Helpers
     class func resizeImage(image: UIImage, newWidth: CGFloat) -> UIImage {
+        // Get scale factor for resize
         let scale = newWidth / image.size.width
-        let newHeight = image.size.height * scale 
+        
+        // Calculate new height
+        let newHeight = image.size.height * scale
+        
+        // Create canvas for a new image
         UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight))
+        
+        // Draw new image in new bounds on canvas
         image.drawInRect(CGRectMake(0, 0, newWidth, newHeight))
+        
+        // Export new image from canvas
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        
+        // Dispose canvas
         UIGraphicsEndImageContext()
         
         return newImage
     }
     
-    //MARK: Convertations
+    //MARK: Convertations Helpers
     class func convertFloatShutterToString(value:Float) -> String {
         var returnString = ""
         if (value == 0.5) {
@@ -115,12 +126,19 @@ class DKCameraHelper: NSObject {
         return NSIndexPath(forItem: itemPosition, inSection: 0)
     }
     
-    //MARK: Other
+    //MARK: Other Helpers
     class func findCenterIndexForCollectionView(collectionView:UICollectionView) -> NSIndexPath {
+        // Get zone for search
         let collectionOrigin = collectionView.bounds.origin
+        
+        // Get zone width
         let collectionWidth = collectionView.bounds.width
+        
+        // Define variables for search
         var centerPoint: CGPoint!
         var newX: CGFloat!
+        
+        //TODO: Comment more!
         if collectionOrigin.x > 0 {
             newX = collectionOrigin.x + collectionWidth / 2
             centerPoint = CGPoint(x: newX, y: collectionOrigin.y)

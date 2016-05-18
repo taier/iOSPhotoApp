@@ -85,7 +85,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             cameraPreview.layer.addSublayer(previewLayer)
             
             // Tap Gesture
-            let tap = UITapGestureRecognizer(target: self, action : "handleTap:")
+            let tap = UITapGestureRecognizer(target: self, action : #selector(CameraController.handleTap(_:)))
             tap.numberOfTapsRequired = 1
             cameraPreview.addGestureRecognizer(tap)
             viewCamera.addSubview(cameraPreview)
@@ -225,7 +225,29 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         }
     }
     
-
+    func toggleFlash() {
+        if let device = mainCaptureDevice {
+            do {
+                try device.lockForConfiguration()
+            } catch {
+                return
+            }
+            
+            if (device.hasTorch) {
+            do {
+                try device.lockForConfiguration()
+                if (device.torchMode == AVCaptureTorchMode.On) {
+                    device.torchMode = AVCaptureTorchMode.Off
+                } else {
+                    try device.setTorchModeOnWithLevel(1.0)
+                }
+                device.unlockForConfiguration()
+                } catch {
+                print(error)
+                }
+            }
+        }
+    }
     
     func ChangeISOWithValue(value:Float) {
         // Check for available device
@@ -333,6 +355,10 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     @IBAction func buttonAutoISO(sender: AnyObject) {
         setAutoISO()
         toggleAutoButtonON(true)
+    }
+    
+    @IBAction func buttonFlash(sender: AnyObject) {
+        toggleFlash();
     }
     
     @IBAction func buttonLongExposure(sender: AnyObject) {

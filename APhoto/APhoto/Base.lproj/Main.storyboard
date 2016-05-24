@@ -389,7 +389,7 @@
                                     <action selector="buttonLongExposure:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3R5-ku-3kg"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J9x-xY-hgA">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J9x-xY-hgA">
                                 <rect key="frame" x="207" y="431" width="37" height="30"/>
                                 <state key="normal" title="Flash"/>
                                 <connections>
@@ -421,6 +421,9 @@
                             <constraint firstItem="tqL-3S-g2s" firstAttribute="top" secondItem="Dgu-Dl-0uW" secondAttribute="bottom" constant="14" id="SJd-1v-Fm6"/>
                             <constraint firstItem="ipr-9E-Q5Z" firstAttribute="top" secondItem="mLZ-kb-FSf" secondAttribute="bottom" constant="340" id="UV4-r5-mxo"/>
                             <constraint firstAttribute="trailing" secondItem="Dgu-Dl-0uW" secondAttribute="trailing" id="UVU-nt-EDC"/>
+                            <constraint firstItem="I4t-mL-n5F" firstAttribute="leading" secondItem="J9x-xY-hgA" secondAttribute="trailing" constant="31" id="XHq-Mm-8Zp"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="J9x-xY-hgA" secondAttribute="bottom" constant="19" id="XWe-sp-mat"/>
+                            <constraint firstItem="J9x-xY-hgA" firstAttribute="leading" secondItem="ipr-9E-Q5Z" secondAttribute="trailing" constant="18" id="Z4P-UR-nMZ"/>
                             <constraint firstAttribute="trailing" secondItem="mLZ-kb-FSf" secondAttribute="trailing" id="ZUd-r3-o81"/>
                             <constraint firstItem="mLZ-kb-FSf" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ZfU-rn-J9D"/>
                             <constraint firstItem="tqL-3S-g2s" firstAttribute="top" secondItem="mLZ-kb-FSf" secondAttribute="bottom" constant="340" id="drr-oB-7L1"/>

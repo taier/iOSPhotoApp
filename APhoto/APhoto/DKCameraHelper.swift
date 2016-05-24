@@ -126,6 +126,40 @@ class DKCameraHelper: NSObject {
         return NSIndexPath(forItem: itemPosition, inSection: 0)
     }
     
+    //MARK: Data helpers
+    
+    class func prepareISO() -> [Float]  {
+        var arrayISO = [Float]()
+        arrayISO.append(50)
+        arrayISO.append(100)
+        arrayISO.append(200)
+        arrayISO.append(400)
+        arrayISO.append(800)
+        arrayISO.append(1600)
+        arrayISO.append(2000)
+        
+        return arrayISO;
+    }
+    
+   class func prepareShutter() -> [Float] {
+        var arrayShutter = [Float]()
+        arrayShutter.append(0.00015)
+        arrayShutter.append(0.0002)
+        arrayShutter.append(0.0005)
+        arrayShutter.append(0.001)
+        arrayShutter.append(0.002)
+        arrayShutter.append(0.005)
+        arrayShutter.append(0.01)
+        arrayShutter.append(0.02)
+        arrayShutter.append(0.05)
+        arrayShutter.append(0.1)
+        arrayShutter.append(0.2)
+        arrayShutter.append(0.5)
+        
+        return arrayShutter;
+    }
+
+    
     //MARK: Other Helpers
     class func findCenterIndexForCollectionView(collectionView:UICollectionView) -> NSIndexPath {
         // Get zone for search

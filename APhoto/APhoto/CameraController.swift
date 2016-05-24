@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import AVFoundation 
+import AVFoundation
 
 class CameraController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, AVCaptureVideoDataOutputSampleBufferDelegate  {
 
@@ -53,8 +53,8 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     override func viewDidLoad() {
         super.viewDidLoad()
         prepareCamera()
-        prepareISO()
-        prepareShutter()
+        arrayISO = DKCameraHelper.prepareISO()
+        arrayShutter = DKCameraHelper.prepareShutter()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -69,7 +69,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     }
 
     
-    // MARK: SetupStuff
+    // MARK: Setup
     func lauchCamera() {
         
         if(cameraRunning) {
@@ -94,42 +94,42 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
 
     }
     
-    func changeCameraModeForLongExposure() {
-        if let device = mainCaptureDevice {
-        
-            captureSession.stopRunning()
-            captureSession.beginConfiguration()
-            captureSession.sessionPreset = AVCaptureSessionPresetMedium
-            
-            videoImageOutput = AVCaptureVideoDataOutput();
-            videoImageOutput.videoSettings = [ kCVPixelBufferPixelFormatTypeKey: Int(kCVPixelFormatType_32BGRA) ]
-
-            
-            var outputQueue : dispatch_queue_t?
-            outputQueue = dispatch_queue_create("outputQueue", DISPATCH_QUEUE_SERIAL);
-            videoImageOutput.setSampleBufferDelegate(self, queue: outputQueue)
-            videoImageOutput.alwaysDiscardsLateVideoFrames = true;
-            
-            do {
-                try device.lockForConfiguration()  
-            } catch {
-                return
-            }
-            
-            device.activeVideoMinFrameDuration = CMTimeMake(1, 50)
-            
-            device.unlockForConfiguration()
-            
-            if captureSession.canAddOutput(videoImageOutput) {
-                captureSession.addOutput(videoImageOutput)
-            }
-            
-            captureSession.commitConfiguration()
-            captureSession.startRunning()
-            
-            self.viewCamera.bringSubviewToFront(self.imageViewPreviewLongExposure)
-        }
-    }
+//    func changeCameraModeForLongExposure() {
+//        if let device = mainCaptureDevice {
+//        
+//            captureSession.stopRunning()
+//            captureSession.beginConfiguration()
+//            captureSession.sessionPreset = AVCaptureSessionPresetMedium
+//            
+//            videoImageOutput = AVCaptureVideoDataOutput();
+//            videoImageOutput.videoSettings = [ kCVPixelBufferPixelFormatTypeKey: Int(kCVPixelFormatType_32BGRA) ]
+//
+//            
+//            var outputQueue : dispatch_queue_t?
+//            outputQueue = dispatch_queue_create("outputQueue", DISPATCH_QUEUE_SERIAL);
+//            videoImageOutput.setSampleBufferDelegate(self, queue: outputQueue)
+//            videoImageOutput.alwaysDiscardsLateVideoFrames = true;
+//            
+//            do {
+//                try device.lockForConfiguration()  
+//            } catch {
+//                return
+//            }
+//            
+//            device.activeVideoMinFrameDuration = CMTimeMake(1, 50)
+//            
+//            device.unlockForConfiguration()
+//            
+//            if captureSession.canAddOutput(videoImageOutput) {
+//                captureSession.addOutput(videoImageOutput)
+//            }
+//            
+//            captureSession.commitConfiguration()
+//            captureSession.startRunning()
+//            
+//            self.viewCamera.bringSubviewToFront(self.imageViewPreviewLongExposure)
+//        }
+//    }
     
     func prepareCamera() {
         
@@ -151,31 +151,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         }
     }
     
-    func prepareISO() {
-        arrayISO.append(50)
-        arrayISO.append(100)
-        arrayISO.append(200)
-        arrayISO.append(400)
-        arrayISO.append(800)
-        arrayISO.append(1600)
-        arrayISO.append(2000)
-    }
-    
-    func prepareShutter() {
-        arrayShutter.append(0.00015)
-        arrayShutter.append(0.0002)
-        arrayShutter.append(0.0005)
-        arrayShutter.append(0.001)
-        arrayShutter.append(0.002)
-        arrayShutter.append(0.005)
-        arrayShutter.append(0.01)
-        arrayShutter.append(0.02)
-        arrayShutter.append(0.05)
-        arrayShutter.append(0.1)
-        arrayShutter.append(0.2)
-        arrayShutter.append(0.5)
-    }
-
+   
     
     // MAR: Camera stuff
     func processPhoto() { // Save and move to next controller
@@ -362,7 +338,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     }
     
     @IBAction func buttonLongExposure(sender: AnyObject) {
-        changeCameraModeForLongExposure()
+//        changeCameraModeForLongExposure()
     }
     
     // MARK: Touches
@@ -399,10 +375,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     }
     
     // MARK: Camera Delegate
-    
     func captureOutput(captureOutput: AVCaptureOutput!, didDropSampleBuffer sampleBuffer: CMSampleBuffer!, fromConnection connection: AVCaptureConnection!) {
-        
-        print("frame dropped")
     }
     
     func captureOutput(captureOutput: AVCaptureOutput, didOutputSampleBuffer sampleBuffer: CMSampleBufferRef, fromConnection connection: AVCaptureConnection) {

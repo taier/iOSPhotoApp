@@ -28,19 +28,49 @@ class ImageViewController: UIViewController, UICollectionViewDataSource {
     // MARK: Setup
     func initialSetup() {
         // Set initial image to view
+        
         self.mainImageView.image = self.image;
     }
 
     
     // MARK: Actions
     @IBAction func handleDoubleTap(recognizer:UITapGestureRecognizer) {
-        print("Save to photo library")
-        UIImageWriteToSavedPhotosAlbum(self.image, self, #selector(ImageViewController.image(_:didFinishSavingWithError:contextInfo:)), nil)
+        saveImage()
     }
     
     @IBAction func handleSwipeBack(recognizer:UISwipeGestureRecognizer) {
         print("Swiped back to return")
+        moveToPreviosScreen()
+    }
+    
+    @IBAction func onShareButtonPress(sender: AnyObject) {
+        shareImage()
+    }
+    
+    @IBAction func onSaveButtonPress(sender: AnyObject) {
+        saveImage()
+    }
+    
+    @IBAction func onBackButtonPress(sender: AnyObject) {
+        moveToPreviosScreen()
+    }
+    
+    
+    // Private methods
+    func moveToPreviosScreen() {
+        print("Move to previos screen")
         self.dismissViewControllerAnimated(false, completion: nil)
+    }
+    
+    func shareImage() {
+        print("Save Image")
+        let vc = UIActivityViewController(activityItems: [image], applicationActivities: [])
+        presentViewController(vc, animated: true, completion: nil)
+    }
+    
+    func saveImage() {
+        print("Save to photo library")
+        UIImageWriteToSavedPhotosAlbum(self.image, self, #selector(ImageViewController.image(_:didFinishSavingWithError:contextInfo:)), nil)
     }
     
     // MARK: Image Saving Delegates

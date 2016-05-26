@@ -499,7 +499,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xTV-DS-axg">
-                                <rect key="frame" x="0.0" y="70" width="320" height="340"/>
+                                <rect key="frame" x="6" y="63" width="307" height="347"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <connections>
@@ -523,11 +523,11 @@
                                     <size key="itemSize" width="50" height="70"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="imageCell" id="5CV-FC-sFB" customClass="ImageCollectionViewCell" customModule="APhoto" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="70"/>
+                                        <rect key="frame" x="10" y="0.0" width="50" height="70"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="50" height="70"/>
@@ -568,11 +568,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ele-3e-zLo">
-                                <rect key="frame" x="220" y="20" width="50" height="50"/>
+                                <rect key="frame" x="231" y="26" width="28" height="30"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="dxS-Oh-u1S"/>
-                                    <constraint firstAttribute="width" constant="50" id="rex-HJ-zfj"/>
+                                    <constraint firstAttribute="height" constant="30" id="dxS-Oh-u1S"/>
+                                    <constraint firstAttribute="width" constant="28" id="rex-HJ-zfj"/>
                                 </constraints>
                                 <state key="normal" title="Save" image="Save"/>
                                 <connections>
@@ -580,11 +580,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gyT-Uk-0mw">
-                                <rect key="frame" x="0.0" y="20" width="50" height="50"/>
+                                <rect key="frame" x="14" y="28" width="31" height="31"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="6RR-yq-MA6"/>
-                                    <constraint firstAttribute="width" constant="50" id="uL5-yY-ht5"/>
+                                    <constraint firstAttribute="height" constant="31" id="6RR-yq-MA6"/>
+                                    <constraint firstAttribute="width" constant="31" id="uL5-yY-ht5"/>
                                 </constraints>
                                 <state key="normal" title="Back" image="Back"/>
                                 <connections>
@@ -592,11 +592,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SWF-xc-ahb">
-                                <rect key="frame" x="270" y="20" width="50" height="50"/>
+                                <rect key="frame" x="276" y="24" width="38" height="34"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="JIe-MT-fIl"/>
-                                    <constraint firstAttribute="width" constant="50" id="tQi-23-AsJ"/>
+                                    <constraint firstAttribute="height" constant="34" id="JIe-MT-fIl"/>
+                                    <constraint firstAttribute="width" constant="38" id="tQi-23-AsJ"/>
                                 </constraints>
                                 <state key="normal" title="Share" image="Share"/>
                                 <connections>
@@ -609,25 +609,25 @@
                             <constraint firstItem="bcV-eQ-cV0" firstAttribute="top" secondItem="I1l-oa-VOI" secondAttribute="top" id="4Qo-cw-BsQ"/>
                             <constraint firstItem="OYm-6B-f5D" firstAttribute="top" secondItem="xTV-DS-axg" secondAttribute="bottom" id="4WV-WO-74n"/>
                             <constraint firstItem="OYm-6B-f5D" firstAttribute="leading" secondItem="I1l-oa-VOI" secondAttribute="leading" id="53N-nV-Xvc"/>
-                            <constraint firstItem="gyT-Uk-0mw" firstAttribute="top" secondItem="JCS-1w-TRE" secondAttribute="bottom" id="72I-4e-qUW"/>
+                            <constraint firstItem="gyT-Uk-0mw" firstAttribute="top" secondItem="JCS-1w-TRE" secondAttribute="bottom" constant="8" id="72I-4e-qUW"/>
                             <constraint firstItem="bcV-eQ-cV0" firstAttribute="leading" secondItem="I1l-oa-VOI" secondAttribute="leading" id="BFb-No-pJS"/>
                             <constraint firstItem="OYm-6B-f5D" firstAttribute="top" secondItem="mkh-9R-Vqk" secondAttribute="bottom" constant="13" id="BiK-Sp-lKs"/>
-                            <constraint firstAttribute="trailing" secondItem="xTV-DS-axg" secondAttribute="trailing" id="FJ2-G9-6tf"/>
+                            <constraint firstAttribute="trailing" secondItem="xTV-DS-axg" secondAttribute="trailing" constant="7" id="FJ2-G9-6tf"/>
                             <constraint firstAttribute="trailing" secondItem="OYm-6B-f5D" secondAttribute="trailing" id="GJg-ly-jys"/>
-                            <constraint firstItem="gyT-Uk-0mw" firstAttribute="leading" secondItem="I1l-oa-VOI" secondAttribute="leading" id="Lj7-qZ-pF2"/>
+                            <constraint firstItem="gyT-Uk-0mw" firstAttribute="leading" secondItem="I1l-oa-VOI" secondAttribute="leading" constant="14" id="Lj7-qZ-pF2"/>
                             <constraint firstItem="mkh-9R-Vqk" firstAttribute="centerX" secondItem="I1l-oa-VOI" secondAttribute="centerX" id="Ogg-FH-e9Y"/>
-                            <constraint firstItem="xTV-DS-axg" firstAttribute="top" secondItem="gyT-Uk-0mw" secondAttribute="bottom" id="US6-qN-Ck2"/>
-                            <constraint firstItem="SWF-xc-ahb" firstAttribute="top" secondItem="JCS-1w-TRE" secondAttribute="bottom" id="WbE-VV-Yd2"/>
-                            <constraint firstItem="xTV-DS-axg" firstAttribute="leading" secondItem="I1l-oa-VOI" secondAttribute="leading" id="XaK-Mb-ixE"/>
+                            <constraint firstItem="xTV-DS-axg" firstAttribute="top" secondItem="gyT-Uk-0mw" secondAttribute="bottom" constant="4" id="US6-qN-Ck2"/>
+                            <constraint firstItem="SWF-xc-ahb" firstAttribute="top" secondItem="JCS-1w-TRE" secondAttribute="bottom" constant="4" id="WbE-VV-Yd2"/>
+                            <constraint firstItem="xTV-DS-axg" firstAttribute="leading" secondItem="I1l-oa-VOI" secondAttribute="leading" constant="6" id="XaK-Mb-ixE"/>
                             <constraint firstAttribute="trailing" secondItem="bcV-eQ-cV0" secondAttribute="trailing" id="egu-A9-m3y"/>
                             <constraint firstItem="xTV-DS-axg" firstAttribute="top" secondItem="JCS-1w-TRE" secondAttribute="bottom" id="fbz-mH-6CQ"/>
-                            <constraint firstItem="xTV-DS-axg" firstAttribute="top" secondItem="SWF-xc-ahb" secondAttribute="bottom" id="g1X-UV-p9e"/>
-                            <constraint firstItem="xTV-DS-axg" firstAttribute="top" secondItem="gyT-Uk-0mw" secondAttribute="bottom" id="h8h-Pi-GZI"/>
+                            <constraint firstItem="xTV-DS-axg" firstAttribute="top" secondItem="SWF-xc-ahb" secondAttribute="bottom" constant="5" id="g1X-UV-p9e"/>
+                            <constraint firstItem="xTV-DS-axg" firstAttribute="top" secondItem="gyT-Uk-0mw" secondAttribute="bottom" constant="4" id="h8h-Pi-GZI"/>
                             <constraint firstItem="FeR-ZZ-Zl8" firstAttribute="top" secondItem="OYm-6B-f5D" secondAttribute="bottom" id="org-ZY-rXx"/>
-                            <constraint firstItem="xTV-DS-axg" firstAttribute="top" secondItem="ele-3e-zLo" secondAttribute="bottom" id="qO3-bi-qtu"/>
-                            <constraint firstAttribute="trailing" secondItem="SWF-xc-ahb" secondAttribute="trailing" id="u4K-9P-u7y"/>
-                            <constraint firstItem="SWF-xc-ahb" firstAttribute="leading" secondItem="ele-3e-zLo" secondAttribute="trailing" id="uj5-yZ-meo"/>
-                            <constraint firstItem="ele-3e-zLo" firstAttribute="top" secondItem="JCS-1w-TRE" secondAttribute="bottom" id="wcF-XH-EeU"/>
+                            <constraint firstItem="xTV-DS-axg" firstAttribute="top" secondItem="ele-3e-zLo" secondAttribute="bottom" constant="7" id="qO3-bi-qtu"/>
+                            <constraint firstAttribute="trailing" secondItem="SWF-xc-ahb" secondAttribute="trailing" constant="6" id="u4K-9P-u7y"/>
+                            <constraint firstItem="SWF-xc-ahb" firstAttribute="leading" secondItem="ele-3e-zLo" secondAttribute="trailing" constant="17" id="uj5-yZ-meo"/>
+                            <constraint firstItem="ele-3e-zLo" firstAttribute="top" secondItem="JCS-1w-TRE" secondAttribute="bottom" constant="6" id="wcF-XH-EeU"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">

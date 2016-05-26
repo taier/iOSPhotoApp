@@ -28,7 +28,6 @@ class ImageViewController: UIViewController, UICollectionViewDataSource {
     // MARK: Setup
     func initialSetup() {
         // Set initial image to view
-        
         self.mainImageView.image = self.image;
     }
 
@@ -39,7 +38,6 @@ class ImageViewController: UIViewController, UICollectionViewDataSource {
     }
     
     @IBAction func handleSwipeBack(recognizer:UISwipeGestureRecognizer) {
-        print("Swiped back to return")
         moveToPreviosScreen()
     }
     

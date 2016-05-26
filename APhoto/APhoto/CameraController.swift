@@ -94,43 +94,6 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
 
     }
     
-//    func changeCameraModeForLongExposure() {
-//        if let device = mainCaptureDevice {
-//        
-//            captureSession.stopRunning()
-//            captureSession.beginConfiguration()
-//            captureSession.sessionPreset = AVCaptureSessionPresetMedium
-//            
-//            videoImageOutput = AVCaptureVideoDataOutput();
-//            videoImageOutput.videoSettings = [ kCVPixelBufferPixelFormatTypeKey: Int(kCVPixelFormatType_32BGRA) ]
-//
-//            
-//            var outputQueue : dispatch_queue_t?
-//            outputQueue = dispatch_queue_create("outputQueue", DISPATCH_QUEUE_SERIAL);
-//            videoImageOutput.setSampleBufferDelegate(self, queue: outputQueue)
-//            videoImageOutput.alwaysDiscardsLateVideoFrames = true;
-//            
-//            do {
-//                try device.lockForConfiguration()  
-//            } catch {
-//                return
-//            }
-//            
-//            device.activeVideoMinFrameDuration = CMTimeMake(1, 50)
-//            
-//            device.unlockForConfiguration()
-//            
-//            if captureSession.canAddOutput(videoImageOutput) {
-//                captureSession.addOutput(videoImageOutput)
-//            }
-//            
-//            captureSession.commitConfiguration()
-//            captureSession.startRunning()
-//            
-//            self.viewCamera.bringSubviewToFront(self.imageViewPreviewLongExposure)
-//        }
-//    }
-    
     func prepareCamera() {
         
         let devices = AVCaptureDevice.devices().filter{ $0.hasMediaType(AVMediaTypeVideo) && $0.position == AVCaptureDevicePosition.Back }
@@ -337,10 +300,6 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         toggleFlash();
     }
     
-    @IBAction func buttonLongExposure(sender: AnyObject) {
-//        changeCameraModeForLongExposure()
-    }
-    
     // MARK: Touches
     func handleTap(sender: UITapGestureRecognizer) {
         
@@ -432,25 +391,6 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         
         return longExpImg
     }
-    
-//    - (UIImage *) createLongExposure:(NSArray *)images {
-//    UIImage *firstImg = images[0];
-//    CGSize imgSize = firstImg.size;
-//    CGFloat alpha = 1.0 / images.count;
-//    
-//    UIGraphicsBeginImageContext(imgSize);
-//    CGContextRef context = UIGraphicsGetCurrentContext();
-//    CGContextSetFillColorWithColor(context, [[UIColor blackColor] CGColor]);
-//    CGContextFillRect(context, CGRectMake(0, 0, imgSize.width, imgSize.height));
-//    
-//    for (UIImage *image in images) {
-//    [image drawInRect:CGRectMake(0, 0, imgSize.width, imgSize.height)
-//    blendMode:kCGBlendModePlusLighter alpha:alpha];
-//    }
-//    UIImage *longExpImg = UIGraphicsGetImageFromCurrentImageContext();
-//    UIGraphicsEndImageContext();
-//    return longExpImg;
-//    }
 
     
     // MARK: Collection View Delegates

@@ -20,6 +20,13 @@
 		97F555A01CA2FDB80039AF94 /* ImageRotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F5559F1CA2FDB80039AF94 /* ImageRotation.swift */; };
 		B703A6971C878CCC0025B3A0 /* DKAEffectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B703A6961C878CCC0025B3A0 /* DKAEffectManager.swift */; };
 		B703A69A1C878CEC0025B3A0 /* DKAEffectObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B703A6991C878CEC0025B3A0 /* DKAEffectObject.swift */; };
+		B76CF33D1CF8CA4F0075E495 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B76CF33B1CF8CA4F0075E495 /* Interface.storyboard */; };
+		B76CF33F1CF8CA4F0075E495 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B76CF33E1CF8CA4F0075E495 /* Assets.xcassets */; };
+		B76CF3461CF8CA4F0075E495 /* APhotoWatch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B76CF3451CF8CA4F0075E495 /* APhotoWatch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B76CF34B1CF8CA4F0075E495 /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76CF34A1CF8CA4F0075E495 /* InterfaceController.swift */; };
+		B76CF34D1CF8CA4F0075E495 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76CF34C1CF8CA4F0075E495 /* ExtensionDelegate.swift */; };
+		B76CF34F1CF8CA4F0075E495 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B76CF34E1CF8CA4F0075E495 /* Assets.xcassets */; };
+		B76CF3531CF8CA4F0075E495 /* APhotoWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = B76CF3391CF8CA4F0075E495 /* APhotoWatch.app */; };
 		B76F25A71CF4514300A05EF9 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B76F25A51CF4514300A05EF9 /* Model.xcdatamodeld */; };
 		B76F25A91CF4518E00A05EF9 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76F25A81CF4518E00A05EF9 /* CoreDataManager.swift */; };
 		B7D646051C913F940003DAD5 /* DKCameraHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D646041C913F940003DAD5 /* DKCameraHelper.swift */; };
@@ -40,7 +47,46 @@
 			remoteGlobalIDString = 9776DDB01C860171001A141F;
 			remoteInfo = APhoto;
 		};
+		B76CF3471CF8CA4F0075E495 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9776DDA91C860171001A141F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B76CF3441CF8CA4F0075E495;
+			remoteInfo = "APhotoWatch Extension";
+		};
+		B76CF3511CF8CA4F0075E495 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9776DDA91C860171001A141F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B76CF3381CF8CA4F0075E495;
+			remoteInfo = APhotoWatch;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B76CF3591CF8CA4F0075E495 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B76CF3461CF8CA4F0075E495 /* APhotoWatch Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B76CF35B1CF8CA4F0075E495 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				B76CF3531CF8CA4F0075E495 /* APhotoWatch.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		9776DDB11C860171001A141F /* APhoto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = APhoto.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -62,6 +108,15 @@
 		97F5559F1CA2FDB80039AF94 /* ImageRotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageRotation.swift; sourceTree = "<group>"; };
 		B703A6961C878CCC0025B3A0 /* DKAEffectManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKAEffectManager.swift; sourceTree = "<group>"; };
 		B703A6991C878CEC0025B3A0 /* DKAEffectObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKAEffectObject.swift; sourceTree = "<group>"; };
+		B76CF3391CF8CA4F0075E495 /* APhotoWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = APhotoWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B76CF33C1CF8CA4F0075E495 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		B76CF33E1CF8CA4F0075E495 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B76CF3401CF8CA4F0075E495 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B76CF3451CF8CA4F0075E495 /* APhotoWatch Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "APhotoWatch Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B76CF34A1CF8CA4F0075E495 /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
+		B76CF34C1CF8CA4F0075E495 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
+		B76CF34E1CF8CA4F0075E495 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B76CF3501CF8CA4F0075E495 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B76F25A61CF4514300A05EF9 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		B76F25A81CF4518E00A05EF9 /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataManager.swift; path = APhoto/CoreDataManager.swift; sourceTree = "<group>"; };
 		B7D646041C913F940003DAD5 /* DKCameraHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKCameraHelper.swift; sourceTree = "<group>"; };
@@ -89,6 +144,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B76CF3421CF8CA4F0075E495 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -99,6 +161,8 @@
 				9776DDB31C860171001A141F /* APhoto */,
 				9776DDC81C860171001A141F /* APhotoTests */,
 				9776DDD31C860171001A141F /* APhotoUITests */,
+				B76CF33A1CF8CA4F0075E495 /* APhotoWatch */,
+				B76CF3491CF8CA4F0075E495 /* APhotoWatch Extension */,
 				9776DDB21C860171001A141F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -109,6 +173,8 @@
 				9776DDB11C860171001A141F /* APhoto.app */,
 				9776DDC51C860171001A141F /* APhotoTests.xctest */,
 				9776DDD01C860171001A141F /* APhotoUITests.xctest */,
+				B76CF3391CF8CA4F0075E495 /* APhotoWatch.app */,
+				B76CF3451CF8CA4F0075E495 /* APhotoWatch Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -199,6 +265,27 @@
 			name = Controllers;
 			sourceTree = "<group>";
 		};
+		B76CF33A1CF8CA4F0075E495 /* APhotoWatch */ = {
+			isa = PBXGroup;
+			children = (
+				B76CF33B1CF8CA4F0075E495 /* Interface.storyboard */,
+				B76CF33E1CF8CA4F0075E495 /* Assets.xcassets */,
+				B76CF3401CF8CA4F0075E495 /* Info.plist */,
+			);
+			path = APhotoWatch;
+			sourceTree = "<group>";
+		};
+		B76CF3491CF8CA4F0075E495 /* APhotoWatch Extension */ = {
+			isa = PBXGroup;
+			children = (
+				B76CF34A1CF8CA4F0075E495 /* InterfaceController.swift */,
+				B76CF34C1CF8CA4F0075E495 /* ExtensionDelegate.swift */,
+				B76CF34E1CF8CA4F0075E495 /* Assets.xcassets */,
+				B76CF3501CF8CA4F0075E495 /* Info.plist */,
+			);
+			path = "APhotoWatch Extension";
+			sourceTree = "<group>";
+		};
 		B76F25AA1CF4519700A05EF9 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
@@ -218,10 +305,12 @@
 				9776DDAD1C860171001A141F /* Sources */,
 				9776DDAE1C860171001A141F /* Frameworks */,
 				9776DDAF1C860171001A141F /* Resources */,
+				B76CF35B1CF8CA4F0075E495 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				B76CF3521CF8CA4F0075E495 /* PBXTargetDependency */,
 			);
 			name = APhoto;
 			productName = APhoto;
@@ -264,13 +353,47 @@
 			productReference = 9776DDD01C860171001A141F /* APhotoUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		B76CF3381CF8CA4F0075E495 /* APhotoWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B76CF35A1CF8CA4F0075E495 /* Build configuration list for PBXNativeTarget "APhotoWatch" */;
+			buildPhases = (
+				B76CF3371CF8CA4F0075E495 /* Resources */,
+				B76CF3591CF8CA4F0075E495 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B76CF3481CF8CA4F0075E495 /* PBXTargetDependency */,
+			);
+			name = APhotoWatch;
+			productName = APhotoWatch;
+			productReference = B76CF3391CF8CA4F0075E495 /* APhotoWatch.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		B76CF3441CF8CA4F0075E495 /* APhotoWatch Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B76CF3581CF8CA4F0075E495 /* Build configuration list for PBXNativeTarget "APhotoWatch Extension" */;
+			buildPhases = (
+				B76CF3411CF8CA4F0075E495 /* Sources */,
+				B76CF3421CF8CA4F0075E495 /* Frameworks */,
+				B76CF3431CF8CA4F0075E495 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "APhotoWatch Extension";
+			productName = "APhotoWatch Extension";
+			productReference = B76CF3451CF8CA4F0075E495 /* APhotoWatch Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		9776DDA91C860171001A141F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0720;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Sudo Mobi";
 				TargetAttributes = {
@@ -285,6 +408,13 @@
 					9776DDCF1C860171001A141F = {
 						CreatedOnToolsVersion = 7.2;
 						TestTargetID = 9776DDB01C860171001A141F;
+					};
+					B76CF3381CF8CA4F0075E495 = {
+						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = 99TE4Z2NY7;
+					};
+					B76CF3441CF8CA4F0075E495 = {
+						CreatedOnToolsVersion = 7.3;
 					};
 				};
 			};
@@ -304,6 +434,8 @@
 				9776DDB01C860171001A141F /* APhoto */,
 				9776DDC41C860171001A141F /* APhotoTests */,
 				9776DDCF1C860171001A141F /* APhotoUITests */,
+				B76CF3381CF8CA4F0075E495 /* APhotoWatch */,
+				B76CF3441CF8CA4F0075E495 /* APhotoWatch Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -330,6 +462,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B76CF3371CF8CA4F0075E495 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B76CF33F1CF8CA4F0075E495 /* Assets.xcassets in Resources */,
+				B76CF33D1CF8CA4F0075E495 /* Interface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B76CF3431CF8CA4F0075E495 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B76CF34F1CF8CA4F0075E495 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,6 +519,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B76CF3411CF8CA4F0075E495 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B76CF34D1CF8CA4F0075E495 /* ExtensionDelegate.swift in Sources */,
+				B76CF34B1CF8CA4F0075E495 /* InterfaceController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -382,6 +540,16 @@
 			isa = PBXTargetDependency;
 			target = 9776DDB01C860171001A141F /* APhoto */;
 			targetProxy = 9776DDD11C860171001A141F /* PBXContainerItemProxy */;
+		};
+		B76CF3481CF8CA4F0075E495 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B76CF3441CF8CA4F0075E495 /* APhotoWatch Extension */;
+			targetProxy = B76CF3471CF8CA4F0075E495 /* PBXContainerItemProxy */;
+		};
+		B76CF3521CF8CA4F0075E495 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B76CF3381CF8CA4F0075E495 /* APhotoWatch */;
+			targetProxy = B76CF3511CF8CA4F0075E495 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -400,6 +568,14 @@
 				9776DDBE1C860171001A141F /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		B76CF33B1CF8CA4F0075E495 /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B76CF33C1CF8CA4F0075E495 /* Base */,
+			);
+			name = Interface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -564,6 +740,74 @@
 			};
 			name = Release;
 		};
+		B76CF3541CF8CA4F0075E495 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				IBSC_MODULE = APhotoWatch_Extension;
+				INFOPLIST_FILE = APhotoWatch/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = "mobi.sudo.manual-camera.watchkitapp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Debug;
+		};
+		B76CF3551CF8CA4F0075E495 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				IBSC_MODULE = APhotoWatch_Extension;
+				INFOPLIST_FILE = APhotoWatch/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = "mobi.sudo.manual-camera.watchkitapp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Release;
+		};
+		B76CF3561CF8CA4F0075E495 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				INFOPLIST_FILE = "APhotoWatch Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "mobi.sudo.manual-camera.watchkitapp.watchkitextension";
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Debug;
+		};
+		B76CF3571CF8CA4F0075E495 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				INFOPLIST_FILE = "APhotoWatch Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "mobi.sudo.manual-camera.watchkitapp.watchkitextension";
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -599,6 +843,24 @@
 			buildConfigurations = (
 				9776DDE01C860171001A141F /* Debug */,
 				9776DDE11C860171001A141F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B76CF3581CF8CA4F0075E495 /* Build configuration list for PBXNativeTarget "APhotoWatch Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B76CF3561CF8CA4F0075E495 /* Debug */,
+				B76CF3571CF8CA4F0075E495 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B76CF35A1CF8CA4F0075E495 /* Build configuration list for PBXNativeTarget "APhotoWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B76CF3541CF8CA4F0075E495 /* Debug */,
+				B76CF3551CF8CA4F0075E495 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

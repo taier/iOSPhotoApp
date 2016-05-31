@@ -28,4 +28,7 @@ class InterfaceController: WKInterfaceController {
         super.didDeactivate()
     }
 
+    @IBAction func onAppleWatchButtonPress() {
+        NSNotificationCenter.defaultCenter().postNotificationName("onWatchButonPressNotification", object:nil, userInfo:nil)
+    }
 }

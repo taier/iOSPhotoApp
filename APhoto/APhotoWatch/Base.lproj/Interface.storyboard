@@ -10,7 +10,11 @@
             <objects>
                 <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="APhotoWatch" customModuleProvider="target">
                     <items>
-                        <button width="1" height="1" alignment="center" title="Take Image" id="0Wz-54-i5K"/>
+                        <button width="1" height="1" alignment="center" title="Take Image" id="0Wz-54-i5K">
+                            <connections>
+                                <action selector="onAppleWatchButtonPress" destination="AgC-eL-Hgc" id="FVZ-fx-8ge"/>
+                            </connections>
+                        </button>
                     </items>
                 </controller>
             </objects>

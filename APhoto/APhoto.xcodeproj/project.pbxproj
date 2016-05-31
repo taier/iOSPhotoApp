@@ -20,6 +20,7 @@
 		97F555A01CA2FDB80039AF94 /* ImageRotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F5559F1CA2FDB80039AF94 /* ImageRotation.swift */; };
 		B703A6971C878CCC0025B3A0 /* DKAEffectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B703A6961C878CCC0025B3A0 /* DKAEffectManager.swift */; };
 		B703A69A1C878CEC0025B3A0 /* DKAEffectObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B703A6991C878CEC0025B3A0 /* DKAEffectObject.swift */; };
+		B763512B1CFC6D020089B00F /* WatchSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B763512A1CFC6D020089B00F /* WatchSessionManager.swift */; };
 		B76CF33D1CF8CA4F0075E495 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B76CF33B1CF8CA4F0075E495 /* Interface.storyboard */; };
 		B76CF33F1CF8CA4F0075E495 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B76CF33E1CF8CA4F0075E495 /* Assets.xcassets */; };
 		B76CF3461CF8CA4F0075E495 /* APhotoWatch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B76CF3451CF8CA4F0075E495 /* APhotoWatch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -27,8 +28,6 @@
 		B76CF34D1CF8CA4F0075E495 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76CF34C1CF8CA4F0075E495 /* ExtensionDelegate.swift */; };
 		B76CF34F1CF8CA4F0075E495 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B76CF34E1CF8CA4F0075E495 /* Assets.xcassets */; };
 		B76CF3531CF8CA4F0075E495 /* APhotoWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = B76CF3391CF8CA4F0075E495 /* APhotoWatch.app */; };
-		B76F25A71CF4514300A05EF9 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B76F25A51CF4514300A05EF9 /* Model.xcdatamodeld */; };
-		B76F25A91CF4518E00A05EF9 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76F25A81CF4518E00A05EF9 /* CoreDataManager.swift */; };
 		B7D646051C913F940003DAD5 /* DKCameraHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D646041C913F940003DAD5 /* DKCameraHelper.swift */; };
 /* End PBXBuildFile section */
 
@@ -108,6 +107,7 @@
 		97F5559F1CA2FDB80039AF94 /* ImageRotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageRotation.swift; sourceTree = "<group>"; };
 		B703A6961C878CCC0025B3A0 /* DKAEffectManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKAEffectManager.swift; sourceTree = "<group>"; };
 		B703A6991C878CEC0025B3A0 /* DKAEffectObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKAEffectObject.swift; sourceTree = "<group>"; };
+		B763512A1CFC6D020089B00F /* WatchSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchSessionManager.swift; sourceTree = "<group>"; };
 		B76CF3391CF8CA4F0075E495 /* APhotoWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = APhotoWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B76CF33C1CF8CA4F0075E495 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		B76CF33E1CF8CA4F0075E495 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -117,8 +117,6 @@
 		B76CF34C1CF8CA4F0075E495 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
 		B76CF34E1CF8CA4F0075E495 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B76CF3501CF8CA4F0075E495 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B76F25A61CF4514300A05EF9 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		B76F25A81CF4518E00A05EF9 /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataManager.swift; path = APhoto/CoreDataManager.swift; sourceTree = "<group>"; };
 		B7D646041C913F940003DAD5 /* DKCameraHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKCameraHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -157,7 +155,6 @@
 		9776DDA81C860171001A141F = {
 			isa = PBXGroup;
 			children = (
-				B76F25AA1CF4519700A05EF9 /* CoreData */,
 				9776DDB31C860171001A141F /* APhoto */,
 				9776DDC81C860171001A141F /* APhotoTests */,
 				9776DDD31C860171001A141F /* APhotoUITests */,
@@ -187,6 +184,7 @@
 				B703A69C1C878D080025B3A0 /* UI */,
 				B703A6981C878CD00025B3A0 /* EffectManager */,
 				B703A69B1C878CFE0025B3A0 /* Assets */,
+				B763512A1CFC6D020089B00F /* WatchSessionManager.swift */,
 			);
 			path = APhoto;
 			sourceTree = "<group>";
@@ -284,15 +282,6 @@
 				B76CF3501CF8CA4F0075E495 /* Info.plist */,
 			);
 			path = "APhotoWatch Extension";
-			sourceTree = "<group>";
-		};
-		B76F25AA1CF4519700A05EF9 /* CoreData */ = {
-			isa = PBXGroup;
-			children = (
-				B76F25A51CF4514300A05EF9 /* Model.xcdatamodeld */,
-				B76F25A81CF4518E00A05EF9 /* CoreDataManager.swift */,
-			);
-			name = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -490,14 +479,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				9776DDB71C860171001A141F /* CameraController.swift in Sources */,
-				B76F25A91CF4518E00A05EF9 /* CoreDataManager.swift in Sources */,
 				97F26DC71C875DCC00D3F5CA /* ImageViewController.swift in Sources */,
 				B703A69A1C878CEC0025B3A0 /* DKAEffectObject.swift in Sources */,
 				97F26DC91C8763B300D3F5CA /* ImageCollectionViewCell.swift in Sources */,
+				B763512B1CFC6D020089B00F /* WatchSessionManager.swift in Sources */,
 				97C14A0D1C8DF0E7001E14AC /* ManualControllCollectionViewCell.swift in Sources */,
 				B703A6971C878CCC0025B3A0 /* DKAEffectManager.swift in Sources */,
 				9776DDB51C860171001A141F /* AppDelegate.swift in Sources */,
-				B76F25A71CF4514300A05EF9 /* Model.xcdatamodeld in Sources */,
 				97F555A01CA2FDB80039AF94 /* ImageRotation.swift in Sources */,
 				B7D646051C913F940003DAD5 /* DKCameraHelper.swift in Sources */,
 			);
@@ -866,19 +854,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		B76F25A51CF4514300A05EF9 /* Model.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				B76F25A61CF4514300A05EF9 /* Model.xcdatamodel */,
-			);
-			currentVersion = B76F25A61CF4514300A05EF9 /* Model.xcdatamodel */;
-			path = Model.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 9776DDA91C860171001A141F /* Project object */;
 }

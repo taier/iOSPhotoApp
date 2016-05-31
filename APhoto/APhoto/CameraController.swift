@@ -55,12 +55,15 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         prepareCamera()
         arrayISO = DKCameraHelper.prepareISO()
         arrayShutter = DKCameraHelper.prepareShutter()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(CameraController.onWatchButonPressAction(_:)), name: "onWatchButonPressNotification", object: nil)
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         setCurrentCameraControllsValuesForUI()
         lauchCamera() // For correct frame
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -113,7 +116,6 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             
         }
     }
-    
    
     
     // MAR: Camera stuff
@@ -390,6 +392,12 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         UIGraphicsEndImageContext();
         
         return longExpImg
+    }
+    
+    // MARK: Apple watch delegate
+    
+    func onWatchButonPressAction(notification:NSNotification) {
+        processPhoto()
     }
 
     

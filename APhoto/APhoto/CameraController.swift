@@ -8,8 +8,10 @@
 
 import UIKit
 import AVFoundation
+import WatchConnectivity
 
-class CameraController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, AVCaptureVideoDataOutputSampleBufferDelegate  {
+
+class CameraController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, AVCaptureVideoDataOutputSampleBufferDelegate, WCSessionDelegate  {
 
     // MARK: Enums
     enum ManualControllsMode {
@@ -34,7 +36,6 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     // Data 
     var arrayOfImagesForLongExposure = NSMutableArray()
     
-    
     // MARK: Outlets
     @IBOutlet weak var viewCamera: UIView!
     @IBOutlet var viewSlider: UISlider!
@@ -55,8 +56,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         prepareCamera()
         arrayISO = DKCameraHelper.prepareISO()
         arrayShutter = DKCameraHelper.prepareShutter()
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(CameraController.onWatchButonPressAction(_:)), name: "onWatchButonPressNotification", object: nil)
+        PrepareAppleWatch();
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -113,6 +113,17 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             if captureSession.canAddOutput(stillImageOutput) {
                 captureSession.addOutput(stillImageOutput)
             }
+            
+        }
+    }
+    
+    func PrepareAppleWatch() {
+        if #available(iOS 9.0, *) {
+            if (WCSession.isSupported()) {
+                WCSession.defaultSession().delegate = self;
+                WCSession.defaultSession().activateSession()
+            }
+        } else {
             
         }
     }
@@ -396,8 +407,12 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     
     // MARK: Apple watch delegate
     
-    func onWatchButonPressAction(notification:NSNotification) {
-        processPhoto()
+    @available(iOS 9.0, *)
+    func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
+        //handle received message
+        dispatch_async(dispatch_get_main_queue()) {
+           self.processPhoto()
+        }
     }
 
     

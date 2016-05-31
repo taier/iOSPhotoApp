@@ -32,6 +32,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     var arrayISO = [Float]()
     var arrayShutter = [Float]()
     var cameraRunning = false
+    var flashActive = false;
     
     // Data 
     var arrayOfImagesForLongExposure = NSMutableArray()
@@ -62,9 +63,13 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        
+        if(cameraRunning) {
+            return
+        }
+        
         setCurrentCameraControllsValuesForUI()
         lauchCamera() // For correct frame
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -132,31 +137,13 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     
     // MAR: Camera stuff
     func processPhoto() { // Save and move to next controller
+        fireFlashIfNeeded();
         if let videoConnection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo) {
-            
-            if let device = mainCaptureDevice {
-                do {
-                    try device.lockForConfiguration()
-                } catch {
-                    return
-                }
-            
-            if (device.hasTorch) {
-                do {
-                    try device.setTorchModeOnWithLevel(1.0)
-                    device.unlockForConfiguration()
-                } catch {
-                    print(error)
-                }
-                
-                }
                 stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection) {
-                    (imageDataSampleBuffer, error) -> Void in
-                     device.torchMode = AVCaptureTorchMode.Off
-                    let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
-                    self.moveToImageViewControllerWithImage(UIImage(data: imageData)!)
-
-                }
+                (imageDataSampleBuffer, error) -> Void in
+                let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
+                self.moveToImageViewControllerWithImage(UIImage(data: imageData)!)
+                self.fireFlash(false)
             }
         }
     }
@@ -209,12 +196,12 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             if (device.hasTorch) {
             do {
                 try device.lockForConfiguration()
-                if (device.torchMode == AVCaptureTorchMode.On) {
-                    device.torchMode = AVCaptureTorchMode.Off
+                if (flashActive) {
                     buttonFlash.setImage(UIImage.init(named: "Flash off"), forState: UIControlState.Normal)
+                    flashActive = false;
                 } else {
-                    try device.setTorchModeOnWithLevel(1.0)
                        buttonFlash.setImage(UIImage.init(named: "Flash on"), forState: UIControlState.Normal)
+                    flashActive = true;
                 }
                 device.unlockForConfiguration()
                 } catch {
@@ -222,6 +209,42 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
                 }
             }
         }
+    }
+    
+    func fireFlashIfNeeded() {
+        if (!flashActive) {
+            return;
+        }
+        
+        fireFlash(flashActive)
+    }
+    
+    func fireFlash(fire:Bool) {
+        if let device = mainCaptureDevice {
+            do {
+                try device.lockForConfiguration()
+            } catch {
+                return
+            }
+            
+            if (device.hasTorch) {
+                do {
+                    try device.lockForConfiguration()
+                    
+                    if(fire) {
+                        device.torchMode = AVCaptureTorchMode.On
+                        try device.setTorchModeOnWithLevel(1.0)
+                    } else {
+                         device.torchMode = AVCaptureTorchMode.Off
+                    }
+                    device.unlockForConfiguration()
+                } catch {
+                    print(error)
+                }
+            }
+        }
+
+        
     }
     
     func ChangeISOWithValue(value:Float) {
@@ -374,16 +397,6 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     }
     
     func captureOutput(captureOutput: AVCaptureOutput, didOutputSampleBuffer sampleBuffer: CMSampleBufferRef, fromConnection connection: AVCaptureConnection) {
-
-        dispatch_sync(dispatch_get_main_queue(), {
-            var image:UIImage = self.imageFromSampleBuffer(sampleBuffer)!
-            image = image.imageRotatedByDegrees(90, flip: false)
-            // Add to data
-            self.arrayOfImagesForLongExposure.addObject(image)
-            // Preview
-            self.imageViewPreviewLongExposure.image = self.createLongExposure(self.arrayOfImagesForLongExposure)
-        })
-        
         print("frame received")
     }
     
@@ -404,28 +417,6 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         CVPixelBufferUnlockBaseAddress(imageBuffer, 0)
         let resultImage: UIImage = UIImage(CGImage: imageRef)
         return resultImage
-    }
-    
-    func createLongExposure(images:NSMutableArray) -> UIImage? {
-        
-        let firstImg = images[0]
-        let imgSize = firstImg.size
-        let alpha:CGFloat = CGFloat(1.0 / Double(images.count))
-        
-        UIGraphicsBeginImageContext(imgSize);
-        let context:CGContextRef = UIGraphicsGetCurrentContext()!;
-        CGContextSetFillColorWithColor(context, UIColor.blackColor().CGColor);
-        CGContextFillRect(context, CGRectMake(0, 0, imgSize.width, imgSize.height));
-        
-        for image in images {
-            let rect = CGRect(x:0, y:0, width: imgSize.width, height:imgSize.height)
-            image.drawInRect(rect, blendMode: .PlusLighter, alpha: alpha)
-        }
-        
-        let longExpImg = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        
-        return longExpImg
     }
     
     // MARK: Apple watch delegate

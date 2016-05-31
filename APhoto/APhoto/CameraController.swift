@@ -42,6 +42,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     @IBOutlet var labelCurrentValue: UILabel!
     @IBOutlet var labelInfo: UILabel!
     @IBOutlet var buttonAutoISO: UIButton!
+    @IBOutlet var buttonFlash: UIButton!
     @IBOutlet var imageViewPreviewLongExposure: UIImageView!
     
     @IBOutlet var collectionViewShutter: UICollectionView!
@@ -132,10 +133,30 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     // MAR: Camera stuff
     func processPhoto() { // Save and move to next controller
         if let videoConnection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo) {
-            stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection) {
-                (imageDataSampleBuffer, error) -> Void in
-                let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
-                self.moveToImageViewControllerWithImage(UIImage(data: imageData)!)
+            
+            if let device = mainCaptureDevice {
+                do {
+                    try device.lockForConfiguration()
+                } catch {
+                    return
+                }
+            
+            if (device.hasTorch) {
+                do {
+                    try device.setTorchModeOnWithLevel(1.0)
+                    device.unlockForConfiguration()
+                } catch {
+                    print(error)
+                }
+                
+                }
+                stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection) {
+                    (imageDataSampleBuffer, error) -> Void in
+                     device.torchMode = AVCaptureTorchMode.Off
+                    let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
+                    self.moveToImageViewControllerWithImage(UIImage(data: imageData)!)
+
+                }
             }
         }
     }
@@ -190,8 +211,10 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
                 try device.lockForConfiguration()
                 if (device.torchMode == AVCaptureTorchMode.On) {
                     device.torchMode = AVCaptureTorchMode.Off
+                    buttonFlash.setImage(UIImage.init(named: "Flash off"), forState: UIControlState.Normal)
                 } else {
                     try device.setTorchModeOnWithLevel(1.0)
+                       buttonFlash.setImage(UIImage.init(named: "Flash on"), forState: UIControlState.Normal)
                 }
                 device.unlockForConfiguration()
                 } catch {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -394,7 +394,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="lI1-lx-xtC"/>
                                 </constraints>
-                                <state key="normal" image="Flash"/>
+                                <state key="normal" image="Flash off"/>
                                 <connections>
                                     <action selector="buttonFlash:" destination="BYZ-38-t0r" eventType="touchUpInside" id="43g-hK-I1d"/>
                                 </connections>
@@ -472,6 +472,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="buttonAutoISO" destination="4Ok-uQ-grY" id="WS1-oz-O02"/>
+                        <outlet property="buttonFlash" destination="J9x-xY-hgA" id="KfA-ez-YN7"/>
                         <outlet property="collectionViewISO" destination="sbn-3J-mpT" id="nwf-P6-R9k"/>
                         <outlet property="collectionViewShutter" destination="yPp-uz-pSu" id="uO8-La-D2x"/>
                         <outlet property="imageViewPreviewLongExposure" destination="7NV-8H-GIf" id="aUB-GS-A0p"/>
@@ -662,7 +663,7 @@
     <resources>
         <image name="Back" width="128" height="128"/>
         <image name="Camera Button" width="128" height="128"/>
-        <image name="Flash" width="100" height="100"/>
+        <image name="Flash off" width="100" height="100"/>
         <image name="Focus" width="128" height="128"/>
         <image name="Long Exposure" width="128" height="128"/>
         <image name="Save" width="128" height="128"/>

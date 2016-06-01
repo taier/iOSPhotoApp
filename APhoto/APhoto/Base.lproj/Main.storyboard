@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -241,7 +241,7 @@
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uFc-sG-XHa" userLabel="Middle view">
                                         <rect key="frame" x="153" y="0.0" width="14" height="72"/>
-                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="14" id="8RB-gh-Hvk"/>
                                             <constraint firstAttribute="height" constant="72" id="986-Yn-WFb"/>
@@ -309,16 +309,16 @@
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Ok-uQ-grY" userLabel="Auto iSO">
                                         <rect key="frame" x="277" y="0.0" width="43" height="72"/>
-                                        <color key="backgroundColor" red="0.0" green="0.20000000000000001" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="43" id="0za-If-z1k"/>
                                             <constraint firstAttribute="height" constant="72" id="SCM-ZL-xIV"/>
                                         </constraints>
                                         <state key="normal" title="A">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="buttonAutoISO:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5Kr-4S-VUa"/>
+                                            <action selector="buttonAutoExposure:" destination="BYZ-38-t0r" eventType="touchUpInside" id="25w-2S-thE"/>
                                         </connections>
                                     </button>
                                 </subviews>

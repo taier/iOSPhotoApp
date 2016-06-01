@@ -33,6 +33,8 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     var arrayShutter = [Float]()
     var cameraRunning = false
     var flashActive = false;
+    var autoModeActive = true;
+    var autoModeTimer: NSTimer!
     
     // Data 
     var arrayOfImagesForLongExposure = NSMutableArray()
@@ -68,8 +70,8 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             return
         }
         
-        setCurrentCameraControllsValuesForUI()
-        lauchCamera() // For correct frame
+        sheduleTimerForAutoMode()
+        lauchCamera()
     }
 
     override func didReceiveMemoryWarning() {
@@ -164,7 +166,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         }
     }
     
-    func setAutoISO() {
+    func setAutoExposure() {
         if let device = mainCaptureDevice {
             do {
                 try device.lockForConfiguration()
@@ -174,12 +176,6 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             
             device.exposureMode = AVCaptureExposureMode.ContinuousAutoExposure
             device.unlockForConfiguration()
-            
-            let dispatchTime: dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC)))
-            dispatch_after(dispatchTime, dispatch_get_main_queue(), {
-                self.setCurrentCameraControllsValuesForUI()
-            })
-            
         }
     }
     
@@ -222,7 +218,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
                     try device.lockForConfiguration()
                     device.torchMode = AVCaptureTorchMode.On
                     try device.setTorchModeOnWithLevel(1.0)
-                    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
+                    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1.5 * Double(NSEC_PER_SEC)))
                     
                     dispatch_after(delayTime, dispatch_get_main_queue()) {
                          device.torchMode = AVCaptureTorchMode.Off
@@ -234,8 +230,6 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
                 }
             }
         }
-
-        
     }
     
     func ChangeISOWithValue(value:Float) {
@@ -318,11 +312,30 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             device.unlockForConfiguration()
         }
     }
+    
+    func stopTimerFroAutoMode() {
+        if(autoModeTimer != nil) {
+            autoModeTimer.invalidate()
+            autoModeTimer = nil;
+        }
+    }
+    
+    func sheduleTimerForAutoMode() {
+        stopTimerFroAutoMode()
+        autoModeTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(autoExposureTimerAction), userInfo: nil, repeats: true)
+    }
+    
+    func autoExposureTimerAction() {
+        if(!autoModeActive) {
+            stopTimerFroAutoMode()
+        }
+        
+        setCurrentCameraControllsValuesForUI()
+    }
 
     
     // MARK: Actions
     @IBAction func buttonTakePhoto(sender: AnyObject) {
-        
         if(flashActive) {
             fireFlash()
             let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
@@ -350,9 +363,15 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         
         changeFocus(value)
     }
-    @IBAction func buttonAutoISO(sender: AnyObject) {
-        setAutoISO()
-        toggleAutoButtonON(true)
+    @IBAction func buttonAutoExposure(sender: AnyObject) {
+        autoModeActive = !autoModeActive
+        
+        if (autoModeActive) {
+            setAutoExposure()
+            sheduleTimerForAutoMode()
+        }
+        
+        toggleAutoButtonON(autoModeActive)
     }
     
     @IBAction func buttonFlash(sender: AnyObject) {
@@ -379,10 +398,14 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
                 device.focusPointOfInterest = focusPoint
                 device.focusMode = AVCaptureFocusMode.ContinuousAutoFocus
                 device.exposurePointOfInterest = focusPoint
-                device.exposureMode = AVCaptureExposureMode.ContinuousAutoExposure
+                device.exposureMode = AVCaptureExposureMode.AutoExpose
                 
                 device.unlockForConfiguration()
                 print("Focus on point ",focus_x,focus_y)
+                
+                autoModeActive = true;
+                sheduleTimerForAutoMode()
+                toggleAutoButtonON(autoModeActive)
                 
                 // Animate
                 highlightTouchOnPoint(touchLocation, inView: self.viewCamera)
@@ -455,7 +478,8 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         let isoIndexPath = DKCameraHelper.findCenterIndexForCollectionView(self.collectionViewISO)
         let iso = arrayISO[isoIndexPath.item]
         
-        toggleAutoButtonON(false) // Off auto Mode
+        autoModeActive = false;
+        toggleAutoButtonON(autoModeActive) // Off auto Mode
         
         ChangeShutterAndISOWithValues(shutter, withISO: iso)
     }
@@ -500,7 +524,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     }
     
     func toggleAutoButtonON(on:Bool) {
-        self.buttonAutoISO.backgroundColor = on ? UIColor.greenColor() : UIColor.blueColor()
+        self.buttonAutoISO.backgroundColor = on ? UIColor.greenColor() : UIColor.whiteColor()
     }
 }
 

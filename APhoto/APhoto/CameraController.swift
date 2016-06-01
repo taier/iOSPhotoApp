@@ -137,13 +137,11 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     
     // MAR: Camera stuff
     func processPhoto() { // Save and move to next controller
-        fireFlashIfNeeded();
         if let videoConnection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo) {
                 stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection) {
                 (imageDataSampleBuffer, error) -> Void in
                 let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
                 self.moveToImageViewControllerWithImage(UIImage(data: imageData)!)
-                self.fireFlash(false)
             }
         }
     }
@@ -211,15 +209,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         }
     }
     
-    func fireFlashIfNeeded() {
-        if (!flashActive) {
-            return;
-        }
-        
-        fireFlash(flashActive)
-    }
-    
-    func fireFlash(fire:Bool) {
+    func fireFlash() {
         if let device = mainCaptureDevice {
             do {
                 try device.lockForConfiguration()
@@ -230,12 +220,13 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             if (device.hasTorch) {
                 do {
                     try device.lockForConfiguration()
+                    device.torchMode = AVCaptureTorchMode.On
+                    try device.setTorchModeOnWithLevel(1.0)
+                    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
                     
-                    if(fire) {
-                        device.torchMode = AVCaptureTorchMode.On
-                        try device.setTorchModeOnWithLevel(1.0)
-                    } else {
+                    dispatch_after(delayTime, dispatch_get_main_queue()) {
                          device.torchMode = AVCaptureTorchMode.Off
+                         device.unlockForConfiguration()
                     }
                     device.unlockForConfiguration()
                 } catch {
@@ -331,7 +322,16 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     
     // MARK: Actions
     @IBAction func buttonTakePhoto(sender: AnyObject) {
-       processPhoto()
+        
+        if(flashActive) {
+            fireFlash()
+            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
+            dispatch_after(delayTime, dispatch_get_main_queue()) {
+                self.processPhoto()
+            }
+        } else {
+            processPhoto()
+        }
     }
     
     

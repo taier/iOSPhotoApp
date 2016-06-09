@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -330,6 +330,7 @@
                                     <constraint firstItem="sbn-3J-mpT" firstAttribute="leading" secondItem="uFc-sG-XHa" secondAttribute="trailing" constant="8" id="7GQ-Pu-NMC"/>
                                     <constraint firstItem="GUX-R8-ayu" firstAttribute="top" secondItem="Dgu-Dl-0uW" secondAttribute="top" id="AkR-EY-q41"/>
                                     <constraint firstItem="yPp-uz-pSu" firstAttribute="top" secondItem="TDM-nN-UXl" secondAttribute="bottom" constant="3" id="Bmb-r6-ymd"/>
+                                    <constraint firstAttribute="trailing" secondItem="4Ok-uQ-grY" secondAttribute="trailing" id="I4Z-26-Co3"/>
                                     <constraint firstItem="uFc-sG-XHa" firstAttribute="top" secondItem="Dgu-Dl-0uW" secondAttribute="top" id="SDF-ZS-sIa"/>
                                     <constraint firstAttribute="trailing" secondItem="4Ok-uQ-grY" secondAttribute="trailing" constant="8" id="TCi-xs-jEJ"/>
                                     <constraint firstItem="uFc-sG-XHa" firstAttribute="leading" secondItem="yPp-uz-pSu" secondAttribute="trailing" constant="8" id="YDl-su-y0B"/>
@@ -347,6 +348,7 @@
                                     <mask key="constraints">
                                         <exclude reference="1tY-qM-p0U"/>
                                         <exclude reference="TCi-xs-jEJ"/>
+                                        <exclude reference="h4y-c1-Ndm"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -370,7 +372,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="4nh-oc-8De"/>
-                                    <constraint firstAttribute="width" constant="40" id="Scy-11-0dh"/>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="40" id="Scy-11-0dh"/>
                                     <constraint firstAttribute="height" constant="40" id="Xwe-KI-Fnc"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="gT9-mc-t1H"/>
                                     <constraint firstAttribute="width" constant="40" id="ggM-Ty-Rqh"/>
@@ -392,6 +394,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J9x-xY-hgA">
                                 <rect key="frame" x="213" y="428" width="37" height="35"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" constant="37" id="8rB-ZM-MiY"/>
                                     <constraint firstAttribute="height" constant="35" id="lI1-lx-xtC"/>
                                 </constraints>
                                 <state key="normal" image="Flash off"/>
@@ -466,6 +469,7 @@
                                 <exclude reference="14R-U4-E1C"/>
                                 <exclude reference="N98-zA-XzZ"/>
                                 <exclude reference="fhI-dX-NvA"/>
+                                <exclude reference="XHq-Mm-8Zp"/>
                             </mask>
                         </variation>
                     </view>
